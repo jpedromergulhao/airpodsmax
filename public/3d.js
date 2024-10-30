@@ -40,7 +40,7 @@ let arrPosition = [
 ];
 
 const loader = new GLTFLoader();
-loader.load("./assets/airpods_max_clone.glb",
+loader.load("/assets/airpods_max_clone.glb",
     function (gltf) {
         airPod = gltf.scene;
         scene.add(airPod);
