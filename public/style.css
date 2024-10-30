@@ -49,8 +49,8 @@ img {
     justify-content: center;
     z-index: 9999;
     transition: all 0.2s ease-in-out;
-  }
-  
+}
+
 .spinner {
     width: 50px;
     height: 50px;
@@ -59,10 +59,10 @@ img {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-  
+
 @keyframes spin {
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -588,7 +588,7 @@ section p {
         padding: 10px 29px;
     }
 
-    
+
 
     header img {
         width: 500px;
@@ -645,7 +645,7 @@ section p {
         display: block;
     }
 
-    .bag{
+    .bag {
         transform: translateY(25%);
     }
 
@@ -667,7 +667,7 @@ section p {
         display: block;
         padding: 0;
         margin: 0px 0px 25px 0px;
-        font-size: 1rem;
+        font-size: var(--bigFont3);
     }
 
     .menu.open {
@@ -950,49 +950,58 @@ section p {
         margin-right: 15px;
     }
 
-    .footer{
+    .footer {
         padding: 50px 5px 20px 5px;
     }
 
-    .links{
+    .links {
         padding: 0;
     }
 
-    .rights{
-       padding: 20px 0;
+    .rights {
+        padding: 20px 0;
     }
 }
 
-@media(max-width: 425px){
-    .airpod-img{
+@media(max-width: 425px) {
+    .airpod-img {
         height: 100%;
         width: 100%;
     }
-    
+
     .buyImgs {
         margin-right: 20px;
     }
 }
 
-@media(max-width: 375px){
+@media(max-width: 375px) {
     .buyImgs {
         margin-right: 50px;
     }
 
-    .rights div{
+    .rights div {
         gap: 5px
+    }
+
+    .btns {
+        flex-direction: column;
+    }
+
+    .imgsBtn {
+        flex-direction: row;
     }
 }
 
-@media(max-width: 320px){
-    .person{
+@media(max-width: 320px) {
+    .person {
         height: 200px;
     }
-    .airpod-img{
+
+    .airpod-img {
         height: 150px;
     }
 
-    .buyRight{
+    .buyRight {
         width: 100vw;
         right: 10px;
     }
@@ -1003,19 +1012,11 @@ section p {
         margin-right: 50px;
     }
 
-    .btns {
-       flex-direction: column;
-    }
-
-    .imgsBtn{
-        flex-direction: row;
-    }
-
     .addBtn {
         padding: 8px 10px;
     }
 
-    .rights div{
+    .rights div {
         gap: 1px
     }
 }
