@@ -21,14 +21,14 @@ const batterySection = document.getElementById('battery');
 const batterySectionPosition = batterySection.offsetTop - window.innerHeight * 0.1;
 
 //Checks if the 3d model has already been loaded 
-// const loadElement = document.querySelector(".loadingScreen");
+const loadElement = document.querySelector(".loadingScreen");
 
-// function checkModelLoaded() {
-//     if (is3DModelLoaded) {
-//         document.getElementById("container3d").style.display = "block";
-//         loadElement.style.display = "none";
-//     }
-// }
+function checkModelLoaded() {
+    if (is3DModelLoaded) {
+        document.getElementById("container3d").style.display = "block";
+        loadElement.style.display = "none";
+    }
+}
 
 //AirPod position and rotation for each section
 let arrPosition = [

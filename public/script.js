@@ -1,11 +1,11 @@
 //loading
-// let model3d = document.querySelector(".container3d");
+let model3d = document.querySelector(".container3d");
 
-// window.addEventListener("load", function () {
-//     if (model3d.style.display == "block") {
-//         document.querySelector(".loadingScreen").style.display = "none";
-//     }
-// });
+window.addEventListener("load", function () {
+    if (model3d.style.display == "block") {
+        document.querySelector(".loadingScreen").style.display = "none";
+    }
+});
 
 //reload the page
 function reloadOnResize() {
