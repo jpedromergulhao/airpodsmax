@@ -1,6 +1,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 import { gsap } from 'https://cdn.skypack.dev/gsap';
+
 const width = window.innerWidth, height = window.innerHeight;
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(width, height);
@@ -14,6 +15,7 @@ const buySection = document.getElementById('buy');
 const buySectionPosition = buySection.offsetTop - window.innerHeight * 0.5;
 const batterySection = document.getElementById('battery');
 const batterySectionPosition = batterySection.offsetTop - window.innerHeight * 0.1;
+
 //Checks if the 3d model has already been loaded 
 const loadElement = document.querySelector(".loadingScreen");
 function checkModelLoaded() {
@@ -22,6 +24,7 @@ function checkModelLoaded() {
         loadElement.style.display = "none";
     }
 }
+
 //AirPod position and rotation for each section
 let arrPosition = [
     { id: "header", position: { x: 3.6, y: -0.4, z: -30 }, rotation: { x: 0, y: 3.8, z: 0 } },
@@ -30,6 +33,7 @@ let arrPosition = [
     { id: "comfort", position: { x: 6.5, y: 0.9, z: -55 }, rotation: { x: -0.02, y: 3.05, z: 0.2 } },
     { id: "battery", position: { x: -3, y: 0, z: -30 }, rotation: { x: 0, y: 2.5, z: 0 } },
 ];
+
 const loader = new GLTFLoader();
 loader.load("assets/airpods_max_clone.glb",
     function (gltf) {
@@ -49,31 +53,40 @@ loader.load("assets/airpods_max_clone.glb",
         console.error('An error happened', error);
     }
 );
+
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
 scene.add(ambientLight);
 const topLight = new THREE.DirectionalLight(0xffffff, 1);
 topLight.position.set(500, 500, 500);
 scene.add(topLight);
+
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 }
 animate();
+
 window.addEventListener('resize', () => {
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+    renderer.setSize(newWidth, newHeight);
+    camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
+    adjustModelPosition();
 });
+
 //3d model responsiveness
 function adjustModelPosition() {
-    let headerImg = document.querySelector(".soundWave");
-    let soundImgs = document.querySelector(".soundImgs");
-    let batteryImgs = document.querySelector(".batteryImgs");
-    let confortImgs = document.querySelector(".comfortImgs");
+    const headerImg = document.querySelector(".soundWave");
+    const soundImgs = document.querySelector(".soundImgs");
+    const batteryImgs = document.querySelector(".batteryImgs");
+    const confortImgs = document.querySelector(".comfortImgs");
+
     const headerImgVisible = headerImg.getBoundingClientRect().bottom > 0;
     const soundImgVisible = soundImgs.getBoundingClientRect().bottom > 0;
     const confortImgsVisible = confortImgs.getBoundingClientRect().bottom > 0;
     const batteryImgsVisible = batteryImgs.getBoundingClientRect().bottom > 0;
+
     if (width <= 1300 && width > 1150) {
         airPod.position.set(4.5, -0.3, -30);
     } else if (width <= 1150 && width > 1024) {
@@ -83,22 +96,15 @@ function adjustModelPosition() {
     } else if (width <= 950 && width > 920) {
         airPod.position.set(3.5, -0.3, -35);
     } else if (width <= 920 && width > 768) {
-        if (headerImg.visible) {
-            airPod.position.set(0, -0.3, -35);
-        } 
+        if (headerImgVisible) airPod.position.set(0, -0.3, -35);
     } else if (width <= 768 && width > 570) {
-        if (headerImg.visible) {
-            airPod.position.set(0, -0.3, -40);
-        } 
+        if (headerImgVisible) airPod.position.set(0, -0.3, -40);
     } else if (width <= 570 && width > 440) {
-        if (headerImg.visible) {
-            airPod.position.set(0, -0.3, -45);
-        }
+        if (headerImgVisible) airPod.position.set(0, -0.3, -45);
     } else if (width <= 440 && width > 375) {
-        if (headerImg.visible) {
-            airPod.position.set(0, -0.3, -80);
-        } 
-    }  
+        if (headerImgVisible) airPod.position.set(0, -0.3, -80);
+    }
+
     arrPosition.forEach(obj => {
         if (obj.id === "header") {
             if (width <= 1300 && width > 1150) {
@@ -326,6 +332,7 @@ function adjustModelPosition() {
         }
     })
 }
+
 window.addEventListener('resize', adjustModelPosition);
 const moveModel = () => {
     const sections = document.getElementsByClassName("section");
