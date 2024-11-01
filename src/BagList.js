@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import "./BagList.css";
 import ProductsContainer from './Components/ProductsContainer/ProductsContainer';
 import BagListTop from './Components/BagListTop/BagListTop';
@@ -6,52 +6,22 @@ import BagLisBottom from './Components/BagListBottom/BagListBottom';
 
 function BagList() {
     const bagListRef = useRef(null);
-    const [cartItems, setCartItems] = useState([]); // Inicia o carrinho vazio
-    const availableProducts = [ // Lista de produtos disponíveis
-        {
-            id: 1,
-            name: "AirPod Max Black",
-            image: "airpods-black.png",
-            price: 549,
-            quantity: 0
-        },
-        {
-            id: 2,
-            name: "AirPod Max White",
-            image: "airpods-white.png",
-            price: 549,
-            quantity: 0
-        },
-        {
-            id: 3,
-            name: "AirPod Max Green",
-            image: "airpods-green.png",
-            price: 549,
-            quantity: 0
-        },
-        {
-            id: 4,
-            name: "AirPod Max Blue",
-            image: "airpods-blue.png",
-            price: 549,
-            quantity: 0
-        },
-        {
-            id: 5,
-            name: "AirPod Max Pink",
-            image: "airpods-pink.png",
-            price: 549,
-            quantity: 0
-        }
-    ];
+    const [cartItems, setCartItems] = useState([]);
 
-    const calculateTotalQuantity = () => {
+    const availableProducts = useMemo(() => [
+        { id: 1, name: "AirPod Max Black", image: "airpods-black.png", price: 549, quantity: 0 },
+        { id: 2, name: "AirPod Max White", image: "airpods-white.png", price: 549, quantity: 0 },
+        { id: 3, name: "AirPod Max Green", image: "airpods-green.png", price: 549, quantity: 0 },
+        { id: 4, name: "AirPod Max Blue", image: "airpods-blue.png", price: 549, quantity: 0 },
+        { id: 5, name: "AirPod Max Pink", image: "airpods-pink.png", price: 549, quantity: 0 },
+    ], []);
+
+    const calculateTotalQuantity = useCallback(() => {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
-    };
+    }, [cartItems]);
 
     useEffect(() => {
         const bagElement = document.querySelector('.bag');
-
         bagElement.addEventListener("click", () => {
             bagListRef.current.style.transform = "translateX(0%)";
         });
@@ -59,7 +29,7 @@ function BagList() {
         const quantityElement = document.querySelector('.bag .quantity');
         quantityElement.textContent = calculateTotalQuantity();
         
-    }, [cartItems]);
+    }, [cartItems, calculateTotalQuantity]);
 
     useEffect(() => {
         const handleAddToBag = (event) => {
@@ -87,7 +57,7 @@ function BagList() {
         return () => {
             window.removeEventListener('addToBag', handleAddToBag);
         };
-    }, [cartItems]);
+    }, [cartItems, availableProducts]);
 
     const calculateTotalPrice = () => {
         return cartItems.reduce((total, item) => {
