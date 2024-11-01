@@ -50,7 +50,7 @@ loader.load("assets/airpods_max_clone.glb",
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
     },
     function (error) {
-        console.error('An error happened', error);
+        console.log('An error happened', error);
     }
 );
 
