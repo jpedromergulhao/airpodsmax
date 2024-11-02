@@ -479,6 +479,11 @@ section p {
     color: var(--grayTwo);
 }
 
+.credits{
+    margin: auto;
+    font-size: var(--smallFont2);
+}
+
 @media (max-width: 1300px) {
     :root {
         --bigFont: 5.5rem;
