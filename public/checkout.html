@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="./assets/apple-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link href="./checkout.css" rel="stylesheet">
+  <title>Checkout Page</title>
+</head>
+
+<body>
+  <div id="checkout-root"></div>
+
+  <!-- <div class="content">
+    <div class="summary">
+      <h2>Grant Total</h2>
+      <span class="price">$549,00</span>
+    </div> -->
+
+    <!-- <div class="actionArea">
+      <div class="zipCode">
+        <div class="zipCodeContainer">
+          <h1>Here are your delivery details.</h1>
+          <form>
+            <label for="zipCode">Enter a ZIP code to see delivery options.</label>
+            <div class="zipCodeArea">
+              <div class="inputWrapper">
+                <input class="zipCodeInput" type="text" id="zipCode" name="zipCode" placeholder="ZIP Code" maxlength="8"
+                  required>
+                <button type="submit" class="applyButton">Apply</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="deliverArea">
+      <h2 class="stock">In stock and ready to ship.</h2>
+        <span>Delivers to: Los Angeles</span>
+        <ul class="productsContainer">
+          <li class="product">
+            <img class="img" src="./my-app/public/assets/airpods_max_blue_payment_page.png" alt="airpods-blue">
+            <div class="productInfo">
+              <h6 class="productName">AirPods Max - Blue</h6>
+              <span>Quantity: 1</span>
+            </div>
+          </li>
+          <li class="product">
+            <img class="img" src="./my-app/public/assets/airpods_max_blue_payment_page.png" alt="airpods-blue">
+            <div class="productInfo">
+              <h6 class="productName">AirPods Max - Blue</h6>
+              <span>Quantity: 1</span>
+            </div>
+          </li>
+        </ul>
+        <div class="deliverMethod">
+          <h3>Select your delivery method:</h3>
+          <div class="deliveryInfo">
+            <div class="method" tabindex="0">
+              <div class="date">
+                <h3>Delivers Mon, Dec 2</h3>
+                <h6>Express Delivery</h6>
+              </div>
+              <span>FREE</span>
+            </div>
+            <div class="info">
+              <span>Keep this in mind about your selection:</span>
+              <ul>
+                <li>The carrier may require a signature upon delivery.</li>
+                <li>In-Transit Options: Once your order has been shipped, you can use your tracking link to redirect
+                  your shipment to a pickup point, hold it at a secure location, or fill out a signature waiver or
+                  shipment release.</li>
+              </ul>
+              <a href="https://www.apple.com/shop/help/shipping_delivery" target="_blank">View Apple Shipping Policy</a>
+            </div>
+          </div>
+          <button class="deliveryBtn">Continue to Shipping Address</button>
+        </div>
+      </div> -->
+
+      <!-- <div class="address">
+        <h2>Where should we send your order?</h2>
+        <form>
+          <label for="adress">Enter your name and address:</label>
+          <div class="formInputs">
+            <input class="width inputs" type="text" id="firstName" name="firstName" placeholder="First Name">
+            <input class="width inputs" type="text" id="lastName" name="lastName" placeholder="Last Name">
+            <input class="width inputs" type="text" id="street" name="street" placeholder="Street Address">
+            <input class="width inputs" type="text" id="adrComplement" name="adrComplement"
+              placeholder="Apt, Suite, Building (Optional)">
+            <div class="width minorInputsContainer">
+              <input class="inputs minorInputs" type="text" id="zipCode" name="zipCode" placeholder="ZIP Code" maxlength="8" required>
+              <input class="inputs minorInputs" type="text" id="city" name="city" placeholder="City">
+              <input class="inputs minorInputs" type="text" id="state" name="state" placeholder="State/Province">
+            </div>
+            <input class="width inputs" type="text" id="country" name="country" placeholder="Country/Region">
+          </div>
+        </form>
+      </div>
+      <div class="contact">
+        <h2>What’s your contact information?</h2>
+        <form>
+          <div class="contactInput">
+            <input class="width inputs" type="email" id="email" name="email" placeholder="Email Address" required>
+            <div class="contactExplanation">We’ll email you a receipt and send order updates to your mobile phone via SMS or iMessage.</div>
+          </div>
+          <div class="contactInput marginTop">
+            <input class="width inputs" type="text" id="phone" name="phone" placeholder="Phone Number">
+            <div class="contactExplanation">The phone number you enter can’t be changed after you place your order, so please make sure it’s
+              correct.</div>
+          </div>
+        </form>
+        <button class="contactBtn">Continue to Payment</button>
+      </div> -->
+
+      <!-- <div class="payment">
+        <h2>How do you want to pay?</h2>
+        <div>
+          <div class="card" tabindex="0">
+            <h3>Credit or Debit Card</h3>
+            <h6>Apple Card, Visa, Mastercard, AMEX, Discover, UnionPay</h6>
+          </div>
+          <form class="cardInfo">
+            <label for="card">Enter your card information:</label>
+            <div class="formInputs">
+              <input class="width inputs" type="text" id="card" name="card" placeholder="Credt/Debit Card Number"
+                required>
+              <div class="width minorInputsContainer">
+                <input class="inputs minorInputs" type="text" id="expiration" name="expiration"
+                  placeholder="Expiration MM/YY" maxlength="5" required>
+                <input class="inputs minorInputs" type="text" id="cvv" name="cvv" placeholder="CVV" maxlength="4"
+                  required>
+              </div>
+            </div>
+          </form>
+
+          <form class="bilAddress">
+            <label for="billAddress">Billing Address</label>
+            <div class="checkbox">
+              <input type="checkbox" name="shipAddress" id="shipAddress">
+              <span>Use my shipping address.</span>
+            </div>
+            <div class="shipAddress">
+              <div class="name">
+                <span class="fName">João Pedro</span>
+                <span class="Lname">Mergulhão</span>
+              </div>
+              <span class="street">Los Palos</span>
+              <div>
+                <span class="city">Lancaster</span>
+                <span class="state">PA</span>
+                <span class="zipCodeShip">17601</span>
+              </div>
+              <span class="country">United States</span>
+            </div>
+            <div class="bilAddressForm">
+              <input class="width inputs" type="text" id="country" name="country" placeholder="Country/Region">
+              <input class="width inputs" type="text" id="firstName" name="firstName" placeholder="First Name">
+              <input class="width inputs" type="text" id="lastName" name="lastName" placeholder="Last Name">
+              <input class="width inputs" type="text" id="street" name="street" placeholder="Street Address">
+              <input class="width inputs" type="text" id="adrComplement" name="adrComplement"
+                placeholder="Apt, Suite, Building (Optional)">
+              <div class="width minorInputsContainer">
+                <input class="inputs minorInputs" type="text" id="zipCode" name="zipCode" placeholder="ZIP Code"
+                  maxlength="8" required>
+                <input class="inputs minorInputs" type="text" id="city" name="city" placeholder="City">
+                <input class="inputs minorInputs" type="text" id="state" name="state" placeholder="State/Province">
+              </div>
+            </div>
+          </form>
+        </div>
+        <button class="paymentBtn">Continue to Review</button>
+      </div> -->
+
+      <!-- <div class="review">
+        <h2>Ready to place your order? <br>
+          Let’s make sure everything’s right.</h2>
+        <div class="reviewDeliv">
+          <h3>Delivers Wed, Dec 4</h3>
+          <span>Express Delivery</span>
+          <a href="#">Change shipping method</a>
+        </div>
+        <div class="reviewProdcts">
+          <div class="reviewProdct">
+            <img src="./my-app/public/assets/airpods_max_blue_payment_page.png" alt="AirPods Max">
+            <div class="reviewProdctInfo">
+              <span>AirPods Max - Blue</span>
+              <span>1</span>
+              <span>$549,00</span>
+            </div>
+          </div>
+          <div class="reviewProdct">
+            <img src="./my-app/public/assets/airpods_max_blue_payment_page.png" alt="AirPods Max">
+            <div class="reviewProdctInfo">
+              <span>AirPods Max - Blue</span>
+              <span>1</span>
+              <span>$549,00</span>
+            </div>
+          </div>
+        </div>
+        <div class="reviewShip">
+          <div class="reviewShip1">
+            <h3>Shipping Details</h3>
+            <a href="#">Change</a>
+          </div>
+          <div class="reviewShip2">
+            <h5>Delivers to:</h5>
+            <div class="shipInfo">
+              <div class="name">
+                <span class="fName">João Pedro</span>
+                <span class="Lname">Mergulhão</span>
+              </div>
+              <span class="street">Los Palos</span>
+              <span class="complement">Apt 101</span>
+              <div>
+                <span class="city">Lancaster</span>
+                <span class="state">PA</span>
+                <span class="zipCodeShip">17601</span>
+              </div>
+              <span class="country">United States</span>
+            </div>
+          </div>
+          <div class="reviewShip3">
+            <h5>Contact information:</h5>
+            <div class="contactInfo">
+              <span>j•••••••••••••o@gmail.com</span>
+              <span>••• •••••12</span>
+            </div>
+          </div>
+        </div>
+        <div class="reviewPay">
+          <div class="reviewPay1">
+            <h3>Payment Details</h3>
+            <a href="#">Change</a>
+          </div>
+          <div class="reviewPay2">
+            <h5>Billing address:</h5>
+            <div class="bilInfo">
+              <span class="country">United States</span>
+              <div class="name">
+                <span class="fName">João Pedro</span>
+                <span class="Lname">Mergulhão</span>
+              </div>
+              <span class="street">Los Palos</span>
+              <span class="complement">Apt 101</span>
+              <div>
+                <span class="city">Lancaster</span>
+                <span class="state">PA</span>
+                <span class="zipCodeShip">17601</span>
+              </div>
+            </div>
+          </div>
+          <div class="reviewPay3">
+            <h5>Pay in full with:</h5>
+            <span>Credit/Depit card</span>
+          </div>
+        </div>
+        <div class="reviewTotal">
+          <h5>Your Total</h5>
+          <div class="totalInfo">
+            <div class="subtotals">
+              <div class="subtotal">
+                <span>Subtotal</span>
+                <span>$549,00</span>
+              </div>
+              <div class="subtotal">
+                <span>Shipping</span>
+                <span>FREE</span>
+              </div>
+            </div>
+            <div class="total">
+              <span>Total</span>
+              <span>$549,00</span>
+            </div>
+          </div>
+        </div>
+        <button class="payBtn">Pay</button>
+      </div>
+    </div>
+  </div> -->
+   
+  <!-- <footer class="footer" id="footer" data-aos="fade-up" data-aos-duration="1200">
+    <div class="links">
+      <div class="linkSection">
+        <h6>Shop and Learn</h6>
+        <a href="https://www.apple.com/us/shop/goto/store" target="_blank">Store</a>
+        <a href="https://www.apple.com/mac/" target="_blank">Mac</a>
+        <a href="https://www.apple.com/ipad/" target="_blank">iPad</a>
+        <a href="https://www.apple.com/iphone/" target="_blank">iPhone</a>
+        <a href="https://www.apple.com/watch/" target="_blank">Watch</a>
+        <a href="https://www.apple.com/apple-vision-pro/" target="_blank">Vision</a>
+        <a href="https://www.apple.com/airpods/" target="_blank">AirPods</a>
+        <a href="https://www.apple.com/tv-home/" target="_blank">Tv & Home</a>
+        <a href="https://www.apple.com/airtag/" target="_blank">AirTag</a>
+        <a href="https://www.apple.com/us/shop/goto/buy_accessories" target="_blank">Accessories</a>
+        <a href="https://www.apple.com/us/shop/goto/giftcards" target="_blank">Gift Cards</a>
+      </div>
+      <div class="linkSection">
+        <h6>Apple Wallet</h6>
+        <a href="https://www.apple.com/wallet/" target="_blank">Wallet</a>
+        <a href="https://www.apple.com/apple-card/" target="_blank">Apple Card</a>
+        <a href="https://www.apple.com/apple-pay/" target="_blank">Apple Pay</a>
+        <a href="https://www.apple.com/apple-cash/" target="_blank">Apple Cash</a>
+      </div>
+      <div class="linkSection">
+        <h6>Account</h6>
+        <a href="https://account.apple.com/" target="_blank">Manage Your Apple Account</a>
+        <a href="https://www.apple.com/us/shop/goto/account" target="_blank">Apple Store Account</a>
+        <a href="https://www.icloud.com/" target="_blank">iCloud.com</a>
+      </div>
+      <div class="linkSection">
+        <h6>Entertainment</h6>
+        <a href="https://www.apple.com/apple-one/" target="_blank">Apple One</a>
+        <a href="https://www.apple.com/apple-tv-plus/" target="_blank">Apple Tv+</a>
+        <a href="https://www.apple.com/apple-music/" target="_blank">Apple Music</a>
+        <a href="https://www.apple.com/apple-arcade/" target="_blank">Apple Arcade</a>
+        <a href="https://www.apple.com/apple-fitness-plus/" target="_blank">Apple Fitness+</a>
+        <a href="https://www.apple.com/apple-news/" target="_blank">Apple News+</a>
+        <a href="https://www.apple.com/apple-podcasts/" target="_blank">Apple Podcasts</a>
+        <a href="https://www.apple.com/apple-books/" target="_blank">Apple Books</a>
+        <a href="https://www.apple.com/app-store/" target="_blank">Apple Store</a>
+      </div>
+      <div class="linkSection">
+        <h6>Apple Store</h6>
+        <a href="https://www.apple.com/retail/" target="_blank">Find a Store</a>
+        <a href="https://www.apple.com/retail/geniusbar/" target="_blank">Genius Bar</a>
+        <a href="https://www.apple.com/today/" target="_blank">Today at Apple</a>
+        <a href="https://www.apple.com/today/groups/" target="_blank">Group Reservations</a>
+        <a href="https://www.apple.com/today/camp/" target="_blank">Apple Camp</a>
+        <a href="https://apps.apple.com/us/app/apple-store/id375380948" target="_blank">Apple Store App</a>
+        <a href="https://www.apple.com/us/shop/goto/special_deals" target="_blank">Certified Refurbished</a>
+        <a href="https://www.apple.com/us/shop/goto/trade_in" target="_blank">Apple Trad In</a>
+        <a href="https://www.apple.com/us/shop/goto/payment_plan" target="_blank">Financing</a>
+        <a href="https://www.apple.com/us/shop/goto/buy_iphone/carrier_offers" target="_blank">Carrier Deals at
+          Apple</a>
+        <a href="https://www.apple.com/us/shop/goto/order/list" target="_blank">Order Status</a>
+        <a href="https://www.apple.com/us/shop/goto/help" target="_blank">Shopping Help</a>
+      </div>
+      <div class="linkSection">
+        <h6>For Business</h6>
+        <a href="https://www.apple.com/business/" target="_blank">Apple and Business</a>
+        <a href="https://www.apple.com/retail/business/" target="_blank">Shop for Business</a>
+      </div>
+      <div class="linkSection">
+        <h6>For Education</h6>
+        <a href="https://www.apple.com/education/" target="_blank">Apple and Education</a>
+        <a href="https://www.apple.com/education/k12/how-to-buy/" target="_blank">Shop for K-12</a>
+        <a href="https://www.apple.com/us/shop/goto/educationrouting" target="_blank">Shop for College</a>
+      </div>
+      <div class="linkSection">
+        <h6>For Healthcare</h6>
+        <a href="https://www.apple.com/healthcare/" target="_blank">Apple in Healthcare</a>
+        <a href="https://www.apple.com/healthcare/mac/" target="_blank">Mac in Healthcare</a>
+        <a href="https://www.apple.com/healthcare/apple-watch/" target="_blank">Health on Apple Watch</a>
+        <a href="https://www.apple.com/healthcare/health-records/" target="_blank">Health Records on iPhone and iPad</a>
+      </div>
+      <div class="linkSection">
+        <h6>For Government</h6>
+        <a href="https://www.apple.com/r/store/government/" target="_blank">Shop for Government</a>
+        <a href="https://www.apple.com/us/shop/goto/eppstore/veteransandmilitary" target="_blank">Shop for Veterans and
+          Military</a>
+      </div>
+      <div class="linkSection">
+        <h6>Apple Values</h6>
+        <a href="https://www.apple.com/accessibility/" target="_blank">Accessibility</a>
+        <a href="https://www.apple.com/education-initiative/" target="_blank">Education</a>
+        <a href="https://www.apple.com/environment/" target="_blank">Environment</a>
+        <a href="https://www.apple.com/diversity/" target="_blank">Inckusion and Diversity</a>
+        <a href="https://www.apple.com/privacy/" target="_blank">Privacy</a>
+        <a href="https://www.apple.com/racial-equity-justice-initiative/" target="_blank">Racial Equity and Justice</a>
+        <a href="https://www.apple.com/supply-chain/" target="_blank">Supply Chain</a>
+      </div>
+      <div class="linkSection">
+        <h6>About Apple</h6>
+        <a href="https://www.apple.com/newsroom/" target="_blank">Newsroom</a>
+        <a href="https://www.apple.com/leadership/" target="_blank">Apple Leadership</a>
+        <a href="https://www.apple.com/careers/us/" target="_blank">Career Opportunities</a>
+        <a href="https://investor.apple.com/" target="_blank">Investors</a>
+        <a href="https://www.apple.com/compliance/" target="_blank">Ethics & Compliance</a>
+        <a href="https://www.apple.com/apple-events/" target="_blank">Events</a>
+        <a href="https://www.apple.com/contact/" target="_blank">Contact Apple</a>
+      </div>
+    </div>
+    <div class="rights">
+      <p>&copy; 2024 Apple Inc. All rights reserved.</p>
+      <div>
+        <a href="https://www.apple.com/legal/privacy/" target="_blank">Privacy Policy</a> |
+        <a href="https://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a> |
+        <a href="https://www.apple.com/us/shop/goto/help/sales_refunds" target="_blank">Sales and Refunds</a> |
+        <a href="https://www.apple.com/legal/" target="_blank">Legal</a> |
+        <a href="https://www.apple.com/sitemap/" target="_blank">Site Map</a>
+      </div>
+      <p class="location">
+        One Apple Park Way, Cupertino, CA 95014, (408) 996–1010
+      </p>
+    </div>
+    <div class="credits">
+      <p>
+        "Airpods Max Clone" (https://skfb.ly/oXOoG) by vanshmaheshwari2602 is licensed under CC
+        Attribution-NonCommercial-ShareAlike (http://creativecommons.org/licenses/by-nc-sa/4.0/).
+      </p>
+    </div>
+  </footer> -->
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="../src/checkout-index.js" type="module"></script>
+  <script src="./checkout.js"></script>
+</body>
+
+</html>
