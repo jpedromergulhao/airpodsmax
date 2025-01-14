@@ -7,7 +7,7 @@ function ZipCodeArea() {
 
     const fetchAddress = async (zipCode) => {
         //API for generate the location usind the zip code
-        const API_KEY = "2e3bf57354b64fedb61ea4237819f905";
+        const API_KEY = process.env.REACT_APP_OPENCAGE_API_KEY;
         const url = `https://api.opencagedata.com/geocode/v1/json?q=${zipCode}&key=${API_KEY}&language=en&limit=1`;
 
         try {

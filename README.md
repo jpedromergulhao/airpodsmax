@@ -1,3 +1,8 @@
+## Setting Environment Variables
+
+To run this project, create a `.env` file in the root with the following content: REACT_APP_OPENCAGE_API_KEY=your-api-key
+The file must be called .env (without a prefix) for React to automatically recognize it.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
