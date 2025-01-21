@@ -9,26 +9,27 @@
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
-  <link rel="preload" href="https://cdn.skypack.dev/three@0.129.0/build/three.module.js" as="script"
+  <!-- <link rel="preload" href="https://cdn.skypack.dev/three@0.129.0/build/three.module.js" as="script"
     crossorigin="anonymous">
   <link rel="preload" href="https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js" as="script"
-    crossorigin="anonymous">
-  <link rel="preload" href="https://cdn.skypack.dev/gsap" as="script" crossorigin="anonymous">
+    crossorigin="anonymous"> -->
+  <!-- <link rel="preload" href="https://cdn.skypack.dev/gsap" as="script" crossorigin="anonymous"> -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <title>Apple AirPods Max</title>
 </head>
 
 <body>
-  <div class="loadingScreen">
+  <!-- <div class="loadingScreen">
     <div class="spinner"></div>
-  </div>
+  </div> -->
 
-  <nav data-aos="fade-down" data-aos-duration="1200">
+  <div id="root"></div>
+
+  <!-- <nav data-aos="fade-down" data-aos-duration="1200">
     <a href="#" class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: msFilter;">
         <path
@@ -55,8 +56,6 @@
     </div>
   </nav>
 
-  <div id="root"></div>
-
   <header>
     <div class="headerText section" id="header" data-aos="fade-right" data-aos-duration="1200">
       <h1>AirPods Max</h1>
@@ -69,8 +68,8 @@
     </div>
     <img class="soundWave" src="./assets/Sound-Wave.png" alt="Sound wave" data-aos="zoom-in" data-aos-duration="1200"
       data-aos-delay="200">
-
   </header>
+  
   <main>
     <section class="design section" id="design">
       <img src="./assets/airpods-white-side.png" alt="White AirPods Max" data-aos="zoom-in" data-aos-duration="1200"
@@ -330,20 +329,15 @@
         Attribution-NonCommercial-ShareAlike (http://creativecommons.org/licenses/by-nc-sa/4.0/).
       </p>
     </div>
-  </footer>
+  </footer> -->
 
-  <div id="container3d" class="container3d" style="display: none;"></div>
+  <!-- <div id="container3d" class="container3d" style="display: none;"></div> -->
 
   <!--JavaScript-->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script type="module" src="3d.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-  <script src="script.js"></script>
-  <script src="/src/index.jsx" type="module"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script type="module" src="3d.js"></script> -->
+  <!-- <script src="/src/index.jsx" type="module"></script> -->
 </body>
 
 </html>

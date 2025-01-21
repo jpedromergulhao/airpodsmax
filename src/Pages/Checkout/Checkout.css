@@ -1,0 +1,16 @@
+.content {
+    margin-top: 5.5rem;
+    padding: 0 200px;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--grayThree);
+}
+
+.price {
+    transform: translateY(25%);
+    color: var(--blue);
+}
