@@ -8,14 +8,23 @@ import airPodsGlb from '../assets/airpods_max_clone.glb';
 const mergeRefs = (...refs) => {
     return (element) => {
         refs.forEach((ref) => {
-            if (typeof ref === "function") {
+            if (ref && typeof ref === "function") {
                 ref(element);
-            } else if (ref) {
+            } else if (ref && typeof ref === "object") {
                 ref.current = element;
             }
         });
     };
 };
+
+const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer); // Cancel the previous timer
+        timer = setTimeout(() => func(...args), delay); // Define a new timer
+    };
+};
+
 
 const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, batteryRef, buyRef }, ref) => {
 
@@ -28,14 +37,17 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
     const cameraRef = useRef(null);
     const sceneRef = useRef(new THREE.Scene());
     const loadRef = useRef(new GLTFLoader());
+    const [sectionPositions, setSectionPositions] = useState([]);
 
-    const arrPosition = [ //AirPod position and rotation for each section
+    const arrPosition = Object.freeze([ //AirPod position and rotation for each section
         { id: "header", position: { x: 3.6, y: -0.4, z: -30 }, rotation: { x: 0, y: 3.8, z: 0 } },
         { id: "design", position: { x: -2.5, y: 0, z: -30 }, rotation: { x: 0, y: 3.2, z: 0 } },
         { id: "sound", position: { x: 3, y: 0, z: -40 }, rotation: { x: 0, y: 1.5, z: 0 } },
         { id: "comfort", position: { x: 6.5, y: 0.9, z: -55 }, rotation: { x: -0.02, y: 3.05, z: 0.2 } },
         { id: "battery", position: { x: -3, y: 0, z: -30 }, rotation: { x: 0, y: 2.5, z: 0 } },
-    ];
+    ]);
+
+    const [dynamicArrPosition, setDynamicArrPosition] = useState(...arrPosition);
 
     // The light of the 3d mockup
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
@@ -44,10 +56,22 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
     sceneRef.current.add(ambientLight);
     sceneRef.current.add(topLight);
 
-    const setScreenSize = () => {
+    const updateSectionPositions = () => {
+        const positions = [
+            designRef.current.getBoundingClientRect(),
+            soundRef.current.getBoundingClientRect(),
+            comfortRef.current.getBoundingClientRect(),
+            batteryRef.current.getBoundingClientRect(),
+            buyRef.current.getBoundingClientRect()
+        ];
+        setSectionPositions(positions);
+    };
+
+    const handleResize = debounce(() => {
         setScreenWidth(window.innerWidth);
         setScreenHeight(window.innerHeight);
-    }
+        updateSectionPositions();
+    }, 300);
 
     const moveModel = useCallback(
         (screenHeight, arrPosition, airPod, sections) => {
@@ -55,7 +79,7 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
 
             // finde the current section
             for (const section of sections) {
-                const rect = section.getBoundingClientRect();
+                const rect = section.position;
                 if (rect.top <= screenHeight / 3 && rect.bottom >= 0) {
                     currentSection = section.id;
                     break;
@@ -95,7 +119,7 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
                     gsap.to(airPod, {
                         duration: 0.1,
                         opacity: 0,
-                        onComplete: () => { airPod.visible = false; } 
+                        onComplete: () => { airPod.visible = false; }
                     });
                 }
             }
@@ -106,7 +130,7 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
                     gsap.to(airPod, {
                         duration: 0.1,
                         opacity: 1,
-                        onComplete: () => { airPod.visible = true; } 
+                        onComplete: () => { airPod.visible = true; }
                     });
                 }
             }
@@ -126,7 +150,28 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
         cameraRef.current.updateProjectionMatrix();
         const batterySectionPosition = batteryRef.current.offsetTop - screenHeight * 0.5;
         const buySectionPosition = buyRef.current.offsetTop - screenHeight * 0.1;
-        const sections = [designRef.current, soundRef.current, comfortRef.current, batteryRef.current, buyRef.current];
+        const sections = [
+            {
+                id: designRef.id,
+                position: sectionPositions[0]
+            },
+            {
+                id: soundRef.id,
+                position: sectionPositions[1]
+            },
+            {
+                id: comfortRef.id,
+                position: sectionPositions[2]
+            },
+            {
+                id: batteryRef.id,
+                position: sectionPositions[3]
+            },
+            {
+                id: buyRef.id,
+                position: sectionPositions[4]
+            },
+        ];
 
         // Checks if the 3d model has already been loaded
         const checkModelLoaded = () => {
@@ -162,7 +207,7 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
             };
 
             setAirPodPosition(visibility);
-            updateArrPositions(arrPosition, visibility);
+            updateArrPositions(visibility, screenWidth, airPod);
         }
 
         const isVisible = (element) => element?.getBoundingClientRect()?.bottom > 0;
@@ -182,8 +227,9 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
             applyPosition(positions, airPod, screenWidth, visibility);
         }
 
-        const updateArrPositions = (arrPosition, visibility) => {
-            arrPosition.forEach(section => {
+        const updateArrPositions = (visibility, screenWidth, airPod) => {
+            // Create a new matrix with updated positions
+            const updatedPositions = dynamicArrPosition.map((section) => {
                 const positionsMap = {
                     header: [
                         { min: 1150, max: 1300, x: 4.5, y: -0.3, z: -30 },
@@ -214,59 +260,115 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
                         { min: 440, max: 570, x: 1.5, y: 0, z: -35, condition: "soundImgVisible" },
                         { max: 440, x: 1.5, y: 0, z: -80, condition: "soundImgVisible" },
                     ],
+                    comfort: [
+                        { min: 1150, max: 1300, x: 6.6, y: 1.6, z: -50 },
+                        { min: 1024, max: 1150, x: 7.2, y: 1.7, z: -60 },
+                        { min: 950, max: 1024, x: 7.2, y: 1.7, z: -60 },
+                        { min: 920, max: 950, x: 7.3, y: 1.7, z: -60 },
+                        { min: 768, max: 920, x: 6.5, y: 1.7, z: -60 },
+                        { min: 700, max: 768, x: 6.7, y: 1.7, z: -75 },
+                        { min: 570, max: 700, x: 5.7, y: 1.7, z: -75 },
+                        { min: 375, max: 570, x: 0.7, y: 1.7, z: -100, rotationY: 3.12, condition: "comfortImgsVisible" },
+                        { min: 320, max: 375, x: 0.7, y: 1.7, z: -100, rotationY: 3.12, condition: "comfortImgsVisible" },
+                        { max: 320, x: 1, y: 1.7, z: -130, rotationY: 3.12, condition: "comfortImgsVisible" },
+                    ],
+                    battery: [
+                        { min: 1150, max: 1300, x: -3.2, y: 0, z: -25 },
+                        { min: 1024, max: 1150, x: -3.2, y: 0, z: -30 },
+                        { min: 950, max: 1024, x: -2.7, y: 0, z: -30 },
+                        { min: 920, max: 950, x: -2.7, y: 0, z: -30 },
+                        { min: 768, max: 920, x: -2.5, y: 0, z: -30 },
+                        { min: 700, max: 768, x: -2, y: 0, z: -35 },
+                        { min: 440, max: 700, x: -2, y: 0, z: -35, condition: "batteryImgsVisible" },
+                        { min: 375, max: 440, x: -1, y: 0, z: -70, condition: "batteryImgsVisible" },
+                        { min: 320, max: 375, x: -1, y: 0, z: -55, condition: "batteryImgsVisible" },
+                        { max: 320, x: -1, y: 0, z: -60, condition: "batteryImgsVisible" },
+                    ],
                 };
-
-                applyPosition(positionsMap[section.id] || [], airPod, screenWidth, visibility);
+        
+                const positionUpdates = positionsMap[section.id] || [];
+                let newPosition = { ...section.position }; 
+        
+                // Apply the section rule
+                positionUpdates.some((rule) => {
+                    if (
+                        screenWidth <= rule.max &&
+                        screenWidth > rule.min &&
+                        (!rule.condition || visibility[rule.condition])
+                    ) {
+                        newPosition = { x: rule.x, y: rule.y, z: rule.z };
+                        return true; 
+                    }
+                    return false;
+                });
+        
+                return {
+                    ...section,
+                    position: newPosition,
+                };
             });
-        }
+        
+            setDynamicArrPosition(updatedPositions);
+        
+            updatedPositions.forEach((section) => {
+                applyPosition([section.position], airPod, screenWidth, visibility);
+            });
+        };
 
         const applyPosition = (positions, airPod, screenWidth, visibility) => {
             positions.some(pos => {
                 if (screenWidth <= pos.max && screenWidth > pos.min && (!pos.condition || visibility[pos.condition])) {
                     airPod.position.set(pos.x, pos.y, pos.z);
-                    if (pos.rotation) airPod.rotation.set(...pos.rotation);
-                    return true; // Exit loop after applying position
+        
+                    if (pos.rotationY !== undefined) {
+                        airPod.rotation.y = pos.rotationY;
+                    }
+
+                    return true;
                 }
                 return false;
             });
-        }
+        };
 
-        loadRef.current.load(
-            airPodsGlb,
-            (gltf) => {
-                const model = gltf.scene;
-                model.position.set(3.6, -0.4, -30);
-                model.rotation.set(0, 3.8, 0);
-                model.visible = true;
-
-                // Add the model in the scene
-                sceneRef.current.add(model);
-
-                if (!airPod) {
-                    setAirPod(model);
-                }
-
-                if (airPod) {
-                    if (!is3DModelLoaded) {
-                        setIs3dModelLoaded(true);
+        if (loadRef.current && !airPod) {
+            loadRef.current.load(
+                airPodsGlb,
+                (gltf) => {
+                    const model = gltf.scene;
+    
+                    if (!model.position.equals(new THREE.Vector3(3.6, -0.4, -30))) {
+                        model.position.set(3.6, -0.4, -30);
                     }
-                    checkModelLoaded();
-                    adjustModelPosition();
+                    if (!model.rotation.equals(new THREE.Euler(0, 3.8, 0))) {
+                        model.rotation.set(0, 3.8, 0);
+                    }
+                    if (model.visible !== true) {
+                        model.visible = true;
+                    }
+    
+                    sceneRef.current.add(model);
+    
+                    if (!airPod) {
+                        setAirPod(model);
+                    }
+
+                    if (airPod && !is3DModelLoaded) {
+                        setIs3dModelLoaded(true);
+                        checkModelLoaded();
+                        adjustModelPosition();
+                    }
                 }
-            },
-            function (xhr) {
-                console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-            },
-            function (error) {
-                console.error('An error happened', error);
-            }
-        );
+            );
+        } else if (airPod && is3DModelLoaded) {
+            checkModelLoaded();
+            adjustModelPosition();
+        }
 
         const onScroll = () => {
             handleScroll(screenHeight, arrPosition, airPod, sections, buySectionPosition, batterySectionPosition);
         }
 
-        window.addEventListener('resize', setScreenSize);
+        window.addEventListener('resize', handleResize);
         window.addEventListener("scroll", onScroll);
         rendererRef.current.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
@@ -277,19 +379,52 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
         })
 
         return () => {
-            window.removeEventListener('resize', setScreenSize);
+            // Remove event listeners
+            window.removeEventListener('resize', handleResize);
             window.removeEventListener('scroll', onScroll);
-            rendererRef.current.dispose();
-            airPod.traverse((child) => {
-                if (child.isMesh) {
-                    child.geometry.dispose();
-                    if (child.material.isMaterial) {
-                        child.material.dispose();
+        
+            // Clean up the AirPod model
+            if (airPod) {
+                sceneRef.current.remove(airPod);
+                airPod.traverse((child) => {
+                    if (child.isMesh) {
+                        child.geometry.dispose();
+                        if (Array.isArray(child.material)) {
+                            // Clean up multi-materials
+                            child.material.forEach((material) => {
+                                if (material.isMaterial) material.dispose();
+                            });
+                        } else if (child.material?.isMaterial) {
+                            child.material.dispose();
+                        }
+                    }
+                });
+            }
+        
+            // Dispose of the renderer
+            if (rendererRef.current) {
+                rendererRef.current.dispose();
+            }
+        
+            // Clear the scene
+            if (sceneRef.current) {
+                while (sceneRef.current.children.length > 0) {
+                    const child = sceneRef.current.children[0];
+                    sceneRef.current.remove(child);
+                    if (child.isMesh) {
+                        child.geometry.dispose();
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach((material) => {
+                                if (material.isMaterial) material.dispose();
+                            });
+                        } else if (child.material?.isMaterial) {
+                            child.material.dispose();
+                        }
                     }
                 }
-            });
-            sceneRef.current.dispose();
-        }
+            }
+        };
+        
 
     }, [
         is3DModelLoaded,
@@ -301,6 +436,7 @@ const Container3d = forwardRef(({ headerRef, designRef, soundRef, comfortRef, ba
         sceneRef,
         loadRef,
         arrPosition,
+        dynamicArrPosition,
         handleScroll,
         headerRef,
         designRef,
