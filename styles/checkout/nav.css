@@ -1,0 +1,34 @@
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    right: 0;
+    z-index: 2;
+    padding: 10px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    transition: all .50s ease;
+    border-bottom: 1px solid var(--grayThree);
+}
+
+.logo svg {
+    width: 3rem;
+    height: 3rem;
+}
+
+.navBtn {
+    padding: 8px 12px;
+    color: var(--white);
+    background-color: var(--blue);
+    border: none;
+    border-radius: 30px;
+    transition: all .6s ease;
+}
+
+.navBtn:hover {
+    background-color: var(--gold);
+    transform: translateY(-5px);
+    color: var(--black);
+}
