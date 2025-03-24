@@ -1,6 +1,6 @@
 export const fetchAddress = async (zipCodeValue) => {
     //API for generate the location usind the zip code
-    const API_KEY = 'e4caeca181de4b0399d7bc0fdbdeafbb';
+    const API_KEY = '';
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${zipCodeValue}&key=${API_KEY}&language=en&limit=1`;
 
     try {
