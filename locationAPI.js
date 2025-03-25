@@ -17,6 +17,7 @@ export const fetchAddress = async (zipCodeValue) => {
         }
     } catch (error) {
         console.error("Error:", error);
+        return false;
     }
 };
 

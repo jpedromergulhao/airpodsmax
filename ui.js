@@ -11,22 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!zipForm) renderZipCodeSection();
 
+  let itiLibrary;
+
   // Updating the total grand
   if (totalGrand) {
     totalGrand.textContent = `$${totalPrice}.00`;
   }
 
   // Removes any char that is not a number
-  function removeLetters(e) {
-    const input = e.target;
+  function removeLetters(event) {
+    const input = event.target;
     input.value = input.value.replace(/\D/g, '');
-  }
-
-  // Add the event listener to all desired input fields using a loop or class selector
-  const inputFields = document.querySelectorAll('#zipCode, #phone, #card');
-
-  for (const inputField of inputFields) {
-    inputField.addEventListener('input', removeLetters);
   }
 
   // Start - Manipulation of the action area
@@ -36,45 +31,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleZipCodeSubmit(event) {
     event.preventDefault();
-    const zipCodeValue = document.getElementById('zipCode').value.trim();
+    const zipCode = document.getElementById('zipCode');
+    const zipCodeValue = zipCode.value.trim();
+
+    zipCode.setCustomValidity("");
+    zipCode.reportValidity(); 
 
     if (!validateZipCode(zipCodeValue)) {
-      console.error("Zip code is empty");
-      alert('Please, provide a valid ZIP code');
+      showZipCodeError(zipCode);
       return;
     }
 
-    processZipCode(zipCodeValue);
+    processZipCode(zipCode, zipCodeValue);
   }
 
   function validateZipCode(zipCodeValue) {
     return zipCodeValue !== "";
   }
 
-  async function processZipCode(zipCodeValue) {
-    // Wait for the API response
-    const success = await fetchAddress(zipCodeValue);
+  async function processZipCode(zipCode, zipCodeValue) {
+    try {
+      // Wait for the API response
+      const success = await fetchAddress(zipCodeValue);
 
-    if (!success) {
-      console.error("Failed to retrieve address");
-      alert("Error finding your location, please try again");
-      return;
+      if (!success) {
+        showZipCodeError(zipCode);
+        return;
+      }
+
+      const location = getLocation();
+      console.log(location);
+
+      if (!location || !(location.city || location.town || location._normalized_city || location.county)) {
+        showZipCodeError(zipCode);
+        return;
+      }
+
+      renderDeliveryArea(location);
+    } catch (error) {
+      console.error("Error in processZipCode:", error);
     }
+  }
 
-    const location = getLocation();
+  function showZipCodeError(zipCode) {
+    zipCode.setCustomValidity("Please, provide a valid ZIP code");
+    zipCode.reportValidity();
+    zipCode.value = "";
 
-    if (!location) {
-      console.error("Error to find your location");
-      return;
-    }
-
-    renderDeliveryArea(location);
+    setTimeout(() => {
+      zipCode.setCustomValidity("");
+    }, 100);
   }
 
   function renderZipCodeSection() {
     const existingZipCodeSection = document.querySelector('.zipCodeSection');
     if (existingZipCodeSection) {
-      existingZipCodeSection.remove();
+      existingZipCodeSection?.remove();
     }
 
     // Create the main container for the ZIP code section
@@ -167,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stockH2.textContent = "In stock and ready to ship.";
 
     // User city 
-    const userCity = location.city || location.town || location._normalized_city || location.county;
+    const userCity = location.city || location.town || location._normalized_city || location.county; 
     const deliverLocation = document.createElement("span");
     deliverLocation.textContent = `Delivers to: ${userCity}`;
 
@@ -366,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const minorInputsData = [
       { id: 'zipCode', placeholder: 'ZIP Code', maxlength: '8', required: true, value: addressData.zipCode || location.postcode || '' },
-      { id: 'city', placeholder: 'City', value: addressData.city || location.city || '', required: true },
+      { id: 'city', placeholder: 'City', value: addressData.city || location.city || location.town || location._normalized_city || '', required: true },
       { id: 'state', placeholder: 'State/Province', value: addressData.state || location.state || '', required: true }
     ];
 
@@ -393,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const contactInputsData = [
       { id: 'email', type: 'email', placeholder: 'Email Address', required: true, explanation: "We’ll email you a receipt and send order updates to your mobile phone via SMS or iMessage.", value: contactData.email || '' },
-      { id: 'phone', type: 'text', placeholder: 'Phone Number', explanation: "The phone number you enter can’t be changed after you place your order, so please make sure it’s correct.", value: contactData.phone || '' }
+      { id: 'phone', type: 'text', placeholder: 'Phone Number', required: true, explanation: "The phone number you enter can’t be changed after you place your order, so please make sure it’s correct.", value: contactData.phone || '' }
     ];
 
     contactInputsData.forEach((data, index) => {
@@ -409,12 +421,54 @@ document.addEventListener('DOMContentLoaded', () => {
       input.value = data.value;
       if (data.required) input.required = true;
 
+      // Email validation
+      if (data.id === 'email') {
+        input.addEventListener('input', () => {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(input.value)) {
+            input.setAttribute('data-validation', false);
+            return;
+          } else {
+            input.setCustomValidity('');
+            input.reportValidity();
+            input.setAttribute('data-validation', true);
+          }
+        });
+      }
+
+      // Phone validation and country phone code using intl-tel-input library
+      if (data.id === 'phone') {
+        try {
+          setTimeout(() => { // Timeout to prevent the library from being applied before the input is created in the DOM
+            itiLibrary = window.intlTelInput(document.getElementById('phone'), {
+              initialCountry: 'auto',
+              geoIpLookup: async (callback) => {
+                try {
+                  const response = await fetch("https://ipapi.co/json/");
+                  const geoData = await response.json();
+                  callback(geoData.country_code);
+                } catch {
+                  callback("US");
+                }
+              },
+              utilsScript: "./intlTelInputWithUtils.min.js"
+            });
+          }, 100);
+
+          input.addEventListener('input', (event) => removeLetters(event));
+
+        } catch (error) {
+          console.error('Error in load intlTelInput: ', error);
+        }
+      }
+
       const explanationDiv = document.createElement('div');
       explanationDiv.className = 'contactExplanation';
       explanationDiv.textContent = data.explanation;
 
       contactInputDiv.append(input, explanationDiv);
       contactForm.appendChild(contactInputDiv);
+
     });
 
     const contactBtn = document.createElement('button');
@@ -432,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
 
     const requiredFields = [
-      'firstName', 'lastName', 'street', 'zipCode', 'city', 'state', 'email', 'country'
+      'firstName', 'lastName', 'street', 'zipCode', 'city', 'state', 'email', 'country', 'phone'
     ];
 
     let allFilled = true; // Flag to check if all fields are filled in
@@ -442,7 +496,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!input.value.trim()) {
         input.classList.add('input-error');
         allFilled = false;
+      } else if (input.id === 'email' && input.getAttribute('data-validation') === "false") { // Email verification
+        input.classList.add('input-error');
+        input.setCustomValidity('Please enter a valid email address');
+        input.reportValidity();
+        allFilled = false;
+      } else if (input.id === 'phone' && !itiLibrary.isValidNumber()) { // Phone verification
+        input.classList.add('input-error');
+        input.setCustomValidity('Please enter a valid phone number.');
+        input.reportValidity();
+        allFilled = false;
       } else {
+        input.setCustomValidity('');
+        input.reportValidity();
         input.classList.remove('input-error');
       }
     });
@@ -450,6 +516,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!allFilled) {
       return;
     }
+
+    // Getting the country code and formatting the phone
+    const phoneInput = document.getElementById('phone');
+    const countryData = itiLibrary.getSelectedCountryData();
+    const countryCode = `+${countryData.dialCode}`;
+    const formattedPhone = `${countryCode} ${phoneInput.value.trim()}`;
 
     const addressData = {
       firstName: document.getElementById('firstName').value,
@@ -464,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const contactData = {
       email: document.getElementById('email').value,
-      phone: document.getElementById('phone').value,
+      phone: formattedPhone
     };
 
     localStorage.setItem('addressData', JSON.stringify(addressData));
@@ -527,7 +599,9 @@ document.addEventListener('DOMContentLoaded', () => {
     cardInput.id = 'card';
     cardInput.name = 'card';
     cardInput.placeholder = 'Credit/Debit Card Number';
+    cardInput.maxLength = '19'; // UnionPay (China) and JCB can have 19 digits
     cardInput.required = true;
+    cardInput.addEventListener('input', (event) => removeLetters(event));
 
     const minorInputsContainer = document.createElement('div');
     minorInputsContainer.className = 'width minorInputsContainer';
@@ -540,6 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
     expirationInput.placeholder = 'Expiration MM/YY';
     expirationInput.maxLength = '5';
     expirationInput.required = true;
+    expirationInput.addEventListener('input', (event) => handleExpInput(event));
 
     const cvvInput = document.createElement('input');
     cvvInput.className = 'inputs minorInputs';
@@ -549,6 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cvvInput.placeholder = 'CVV';
     cvvInput.maxLength = '4';
     cvvInput.required = true;
+    cvvInput.addEventListener('input', (event) => removeLetters(event));
 
     minorInputsContainer.append(expirationInput, cvvInput);
     formInputs.append(cardInput, minorInputsContainer);
@@ -679,6 +755,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Appending the payment container to the document
     actionArea.appendChild(paymentDiv);
+  }
+
+  function handleExpInput(event) {
+    const input = event.target;
+    let value = input.value;
+
+    // Remove all non-numeric characters except "/"
+    value = value.replace(/\D/g, '');
+
+    // Format: MM/YY
+    if (value.length > 2 && value.length <= 4) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+
+    // Update the input value with the formatted one
+    input.value = value;
+
+    // Validate if month is valid
+    if (value.length === 5) {
+      const month = parseInt(value.slice(0, 2), 10);
+      const year = parseInt(value.slice(3), 10);
+
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1;
+
+      // Validate month
+      if (month < 1 || month > 12) {
+        input.setCustomValidity('Invalid month. Please enter a valid month (01-12).');
+      } else if (year < currentYear % 100) { // Validate if the year is not in the past
+        input.setCustomValidity('The expiration year cannot be in the past.');
+      } else if (year === currentYear % 100 && month < currentMonth) { // If the year is current, validate if month is past
+        input.setCustomValidity('The expiration month cannot be in the past.');
+      } else {
+        input.setCustomValidity('');
+      }
+
+      input.reportValidity();
+    }
   }
 
   function handleCheckBoxChange(addressData, location) {
@@ -899,10 +1013,32 @@ document.addEventListener('DOMContentLoaded', () => {
     contactInfo.classList.add('contactInfo');
 
     const email = document.createElement('span');
-    email.textContent = contactData.email || "";
+    const emailFormatted = () => {
+      const email = contactData.email;
+      const [localPart, domain] = email.split("@");
+
+      if (!localPart || !domain) return '';
+
+      const maskedPart = localPart.slice(1, -1).replace(/./g, "•");
+      const formattedEmail = `${localPart[0]}${maskedPart}${localPart.slice(-1)}@${domain}`;
+
+      return formattedEmail || '';
+    }
+    email.textContent = emailFormatted();
 
     const phone = document.createElement('span');
-    phone.textContent = contactData.phone || "";
+    const phoneFormatted = () => {
+      const phone = contactData.phone;
+
+      if (!phone) return '';
+
+      const maskedPart = phone.slice(0, -2).replace(/./g, "•");
+      const lastTwoDigits = phone.slice(-2);
+      const formattedPhone = `${maskedPart}${lastTwoDigits}`;
+
+      return formattedPhone || '';
+    }
+    phone.textContent = phoneFormatted();
 
     contactInfo.append(email, phone);
     reviewShip3.append(contactTitle, contactInfo);
