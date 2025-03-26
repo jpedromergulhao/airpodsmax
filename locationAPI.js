@@ -23,15 +23,26 @@ export const fetchAddress = async (zipCodeValue) => {
 
 export const updateLocation = (address) => {
     const location = {
+        //zip code formats
         postcode: address.postcode,
-        //city formats in the API
+        postal_code: address.postal_code,
+        country_code: address.country_code,
+        //city formats 
         city: address.city,
         normalized_city: address._normalized_city,
         town: address.town,
-        county: address.county,
-        //
+        normalized_city: address.normalized_city,
+        municipality: address.municipality,
+        village: address.village,
+        suburb: address.suburb,
+        // state formats 
         state: address.state,
+        region: address.region,
+        state_code: address.state_code,
+        county: address.county,
+        //country formats
         country: address.country,
+        country_code: address.country_code
     };
 
     // Salve in localStorage after state update

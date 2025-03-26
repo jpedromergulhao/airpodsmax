@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const zipCodeValue = zipCode.value.trim();
 
     zipCode.setCustomValidity("");
-    zipCode.reportValidity(); 
+    zipCode.reportValidity();
 
     if (!validateZipCode(zipCodeValue)) {
       showZipCodeError(zipCode);
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const location = getLocation();
       console.log(location);
 
-      if (!location || !(location.city || location.town || location._normalized_city || location.county)) {
+      if (!location || !(location.city || location.town || location._normalized_city || location.normalized_city || location.county || location.municipality || location.village || location.suburb)) {
         showZipCodeError(zipCode);
         return;
       }
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     zipCodeInput.id = 'zipCode';
     zipCodeInput.name = 'zipCode';
     zipCodeInput.placeholder = 'ZIP Code';
-    zipCodeInput.maxLength = 8;
+    zipCodeInput.maxLength = 10;
     zipCodeInput.required = true;
 
     // Create the apply button
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stockH2.textContent = "In stock and ready to ship.";
 
     // User city 
-    const userCity = location.city || location.town || location._normalized_city || location.county; 
+    const userCity = location.city || location.town || location._normalized_city || location.normalized_city || location.municipality || location.village || location.suburb || location.county;
     const deliverLocation = document.createElement("span");
     deliverLocation.textContent = `Delivers to: ${userCity}`;
 
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { id: 'lastName', placeholder: 'Last Name', required: true, value: addressData.lastName || '' },
       { id: 'street', placeholder: 'Street Address', required: true, value: addressData.street || '' },
       { id: 'addrComplement', placeholder: 'Apt, Suite, Building (Optional)', value: addressData.addrComplement || '' },
-      { id: 'country', placeholder: 'Country/Region', value: addressData.country || location.country || '', required: true }
+      { id: 'country', placeholder: 'Country/Region', value: addressData.country || location.country || location.country_code || '', required: true, readonly: true },
     ];
 
     inputsData.forEach(data => {
@@ -369,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
       input.placeholder = data.placeholder;
       if (data.required) input.required = true;
       input.value = data.value;
+      if (data.readonly) input.readOnly = true;  // Make it readonly
       formInputs.appendChild(input);
     });
 
@@ -377,9 +378,9 @@ document.addEventListener('DOMContentLoaded', () => {
     minorInputsContainer.className = 'width minorInputsContainer';
 
     const minorInputsData = [
-      { id: 'zipCode', placeholder: 'ZIP Code', maxlength: '8', required: true, value: addressData.zipCode || location.postcode || '' },
-      { id: 'city', placeholder: 'City', value: addressData.city || location.city || location.town || location._normalized_city || '', required: true },
-      { id: 'state', placeholder: 'State/Province', value: addressData.state || location.state || '', required: true }
+      { id: 'zipCode', placeholder: 'ZIP Code', maxlength: '8', required: true, value: addressData.zipCode || location.postcode || location.postal_code || location.country_code || '', readonly: true, onChange: handleZipCodeChange },
+      { id: 'city', placeholder: 'City', value: addressData.city || location.city || location.town || location._normalized_city || location.normalized_city || location.municipality || location.village || location.suburb || '', readonly: true, required: true },
+      { id: 'state', placeholder: 'State/Province', value: addressData.state || location.state || location.county || location.region || location.province || location.territory || location.state_code || '', required: true, readonly: true }
     ];
 
     minorInputsData.forEach(data => {
@@ -392,6 +393,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.maxlength) input.maxLength = data.maxlength;
       if (data.required) input.required = true;
       input.value = data.value || '';
+
+      // Check if the input should be readonly
+      if (data.readonly) {
+        input.readOnly = true;
+
+        // If the value is empty, make it editable
+        if (data.value === '') {
+          input.readOnly = false;
+        }
+      }
+
+      if (data.onChange) input.addEventListener('change', data.onChange);
+
       minorInputsContainer.appendChild(input);
     });
 
@@ -479,6 +493,19 @@ document.addEventListener('DOMContentLoaded', () => {
     contactDiv.append(contactH2, contactForm, contactBtn);
 
     actionArea.append(addressDiv, contactDiv);
+  }
+
+  // Handle the ZIP Code change to enable zipcode, country, and state
+  function handleZipCodeChange(event) {
+    const zipCodeValue = event.target.value.trim();
+
+    if (zipCodeValue) {
+      // If ZIP code is entered, enable the zipcode, country, and state fields
+      document.getElementById('country').readOnly = false;
+      document.getElementById('state').readOnly = false;
+      document.getElementById('city').readOnly = false;
+      document.getElementById('zipCode').readOnly = false;
+    }
   }
 
   function handleContactClick(event, location) {
