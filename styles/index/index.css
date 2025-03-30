@@ -1,0 +1,79 @@
+:root {
+    --lineHeightH1: 100px;
+    --lineHeightH3: 70px;
+    --lineHeightP: 30px;
+}
+
+html {
+    overflow-x: hidden !important;
+}
+
+img {
+    user-select: none;
+}
+
+.loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: all 0.2s ease-in-out;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--grayThree);
+    border-top-color: var(--black);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.container3d {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@media (max-width: 1300px) {
+    :root {
+        --lineHeightH1: 80px;
+        --lineHeightH3: 60px;
+        --lineHeightP: 25px;
+    }
+}
+
+@media (max-width: 1150px) {
+    :root {
+        --lineHeightH1: 70px
+    }
+}
+
+
+@media (max-width: 570px) {
+    :root {
+        --lineHeightH1: 60px;
+        --lineHeightH3: 50px;
+    }
+}
+
+@media (max-width: 440px) {
+    :root {
+        --lineHeightH1: 50px;
+        --lineHeightH3: 40px;
+        --lineHeightP: 20px;
+    }
+}

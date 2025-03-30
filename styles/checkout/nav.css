@@ -25,10 +25,38 @@ nav {
     border: none;
     border-radius: 30px;
     transition: all .6s ease;
+    font-size: 1rem;
 }
 
 .navBtn:hover {
     background-color: var(--gold);
     transform: translateY(-5px);
     color: var(--black);
+}
+
+@media (max-width: 768px) {
+    .logo svg {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .navBtn {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 425px) {
+
+    nav {
+        padding: 10px 3%;
+    }
+
+    .logo svg {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .navBtn {
+        font-size: 0.7rem;
+    }
 }

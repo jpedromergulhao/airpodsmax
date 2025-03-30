@@ -1,0 +1,181 @@
+.review {
+    padding: 50px 0;
+}
+
+.reviewDeliv {
+    margin: 50px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reviewDeliv h3 {
+    font-size: 1.8rem;
+}
+
+.reviewBtns {
+    color: var(--blue);
+    width: fit-content;
+    height: fit-content;
+    background-color: transparent;
+    border: none;
+    font-size: 0.8rem;
+}
+
+
+.reviewBtns:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.reviewProdct {
+    padding: 40px 0;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    border-bottom: 1px solid var(--grayThree);
+}
+
+.reviewProdct img {
+    width: 200px;
+}
+
+.reviewProdctInfo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.reviewShip,
+.reviewPay,
+.reviewTotal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--grayThree);
+}
+
+.reviewShip1 h3,
+.reviewPay1 h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.reviewShip2 h5,
+.reviewShip3 h5,
+.reviewPay2 h5,
+.reviewPay3 h5 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.shipInfo,
+.contactInfo,
+.bilInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.reviewTotal h5 {
+    font-size: 1.5rem;
+}
+
+.totalInfo {
+    width: 70%;
+}
+
+.subtotals {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--grayThree);
+}
+
+.subtotal,
+.total {
+    display: flex;
+    justify-content: space-between;
+}
+
+.total {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.payBtn {
+    display: flex;
+    justify-self: flex-end;
+    justify-content: center;
+    width: 300px;
+}
+
+@media (max-width: 810px) {
+    .reviewDeliv h3 {
+        font-size: 1.5rem;
+    }
+
+    .reviewProdct {
+        gap: 30px;
+    }
+    
+    .reviewProdct img {
+        width: 100px;
+    }
+
+    .reviewProdctInfo {
+        font-size: 1rem;
+    }
+
+    .reviewShip,
+    .reviewPay,
+    .reviewTotal {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 30px;
+    }
+
+    .reviewShip1 h3,
+    .reviewPay1 h3 {
+        font-size: 1.2rem;
+    }
+
+    .totalInfo {
+        width: 100%;
+    }
+
+    .total {
+        font-size: 1.2rem;
+    }
+}
+
+@media(max-width: 520px){
+
+    .reviewProdct {
+        gap: 20px;
+    }
+
+    .reviewProdct img {
+        width: 50px;
+    }
+
+    .reviewProdctInfo {
+        font-size: 0.8rem;
+    }
+
+    .reviewShip,
+    .reviewPay,
+    .reviewTotal {
+        gap: 20px;
+        font-size: 0.8rem;
+    }
+
+    .payBtn {
+        width: 100%;
+    }
+}

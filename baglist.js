@@ -207,5 +207,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // this custon event was created in the script.js
     window.addEventListener('addToBag', handleAddToBag);
-
 })

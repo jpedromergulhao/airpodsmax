@@ -1,0 +1,85 @@
+.zipCodeSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid var(--grayThree);
+}
+
+.zipCodeContainer {
+    margin: 50px auto;
+    width: 80%;
+    text-align: center;
+}
+
+.zipCodeContainer h1{
+    font-size: 2rem;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form label{
+    font-size: 1rem;
+}
+
+.zipCodeArea {
+    margin-top: 10px;
+}
+
+.inputWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.zipCodeInput {
+    max-width: 300px;
+    padding: 10px 80px 10px 10px;
+    /* Leave enough space for the button. */
+    border-radius: 10px;
+    border: 2px solid var(--grayThree);
+    transition: all 0.2s ease;
+}
+
+.zipCodeInput:focus {
+    border-color: var(--blue);
+    outline: none;
+}
+
+.applyButton {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--blue);
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.applyButton:hover {
+    transform: translateY(-60%);
+}
+
+@media(max-width: 585px){
+    .zipCodeContainer {
+        width: 95%;
+    }
+
+    .zipCodeContainer h1{
+        font-size: 1.8rem;
+    }
+
+    form label{
+        font-size: 0.8rem;
+    }
+}
+
+@media(max-width: 400px){
+    .zipCodeContainer h1{
+        font-size: 1.5rem;
+    }
+}

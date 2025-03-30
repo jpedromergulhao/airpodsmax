@@ -1,0 +1,99 @@
+.address {
+    padding: 50px 0;
+}
+
+.address h2,
+.payment h2,
+.review h2 {
+    font-size: 2rem;
+}
+
+.address form label {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.formInputs {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+}
+
+.width {
+    width: 450px;
+}
+
+.inputs {
+    padding: 20px 15px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 2px solid var(--grayThree);
+    transition: all 0.2s ease;
+}
+
+.inputs:focus {
+    border-color: var(--blue);
+}
+
+.input-error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+.minorInputsContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.minorInputs {
+    width: 100%;
+}
+
+.contact {
+    margin-bottom: 50px;
+}
+
+.contact h2 {
+    font-size: 1.3rem;
+}
+
+.contactInput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.marginTop {
+    margin-top: 10px;
+}
+
+.contactExplanation {
+    font-size: 0.9rem;
+    max-width: 400px;
+}
+
+@media (max-width: 950px) {
+    .contactInput {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start
+    }
+}
+
+@media (max-width: 860px) {
+    .width,
+    .iti {
+        width: 100%;
+    }
+
+    .contactExplanation {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 560px){
+    .minorInputsContainer{
+        flex-direction: column;
+    }
+}

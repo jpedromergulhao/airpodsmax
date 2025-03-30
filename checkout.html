@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
   <link rel="icon" type="image/png" href="./assets/apple-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,8 +12,16 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <link rel="stylesheet" type="text/css" href="./styles//checkout.css">
+  <link rel="stylesheet" type="text/css" href="./styles/style.css">
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/checkout.css">
   <link rel="stylesheet" type="text/css" href="./styles/checkout/nav.css">
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/zipCode.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/deliverArea.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/address.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/payment.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/reviewPage.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/checkout/popup.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/footer.css">
   <link rel="stylesheet" type="text/css" href="./styles/intlTelInput.min.css">
   <title>Checkout Page</title>
 </head>
@@ -45,8 +54,8 @@
             <label for="zipCode">Enter a ZIP code to see delivery options.</label>
             <div class="zipCodeArea">
               <div class="inputWrapper">
-                <input class="zipCodeInput" type="text" id="zipCode" name="zipCode" placeholder="ZIP Code" maxlength="10"
-                  required>
+                <input class="zipCodeInput" type="text" id="zipCode" name="zipCode" placeholder="ZIP Code"
+                  maxlength="10" required>
                 <button type="submit" class="applyButton">Apply</button>
               </div>
             </div>
@@ -212,9 +221,26 @@
   <script>
     AOS.init();
   </script>
-  <script src="./intlTelInputWithUtils.min.js"></script>
-  <script src="./data.min.js"></script>
+  <script src="./libraries/intlTelInputWithUtils.min.js"></script>
+  <script src="./libraries/data.min.js"></script>
   <script type="module" src="./ui.js"></script>
+  <script src="./footer.js"></script>
+  <noscript>
+    <style>
+      body * {
+        display: none !important;
+      }
+
+      body::before {
+        content: "This site requires JavaScript to function properly. Please enable JavaScript or use a supported browser.";
+        display: block;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 50px;
+      }
+    </style>
+  </noscript>
 </body>
 
 </html>

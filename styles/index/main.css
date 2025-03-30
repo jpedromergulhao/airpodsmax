@@ -1,0 +1,483 @@
+.design img {
+    height: 400px;
+}
+
+.sound,
+.battery {
+    background-color: var(--grayOne);
+}
+
+.soundImgs {
+    display: flex;
+    flex-direction: column;
+    max-width: 150px;
+    gap: 20px;
+    justify-self: self-end;
+}
+
+.soundImgsContent {
+    display: grid;
+    gap: 10px;
+}
+
+.soundIcons {
+    height: 35px;
+}
+
+.smartCaseIcon {
+    height: 20px;
+}
+
+.comfortText {
+    z-index: 1;
+}
+
+.circular-sound-wave {
+    position: absolute;
+    height: 90%;
+    right: 50px;
+    top: -10px;
+}
+
+.person {
+    position: relative;
+    right: -150px;
+    height: 500px;
+}
+
+.batteryDiv {
+    margin-bottom: 30px;
+}
+
+.batteryImgsP {
+    font-size: var(--pFont);
+    margin-top: 0;
+}
+
+.batterySvg {
+    width: 30px;
+    height: 30px;
+}
+
+.buy {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buyLeft {
+    max-width: 550px;
+}
+
+.buyLeft h4 {
+    margin: 20px 0;
+    font-size: var(--bigFont3);
+    color: var(--black);
+}
+
+.buyRight {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.buyImgs {
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.airpod-img {
+    height: 100%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.black {
+    opacity: 1;
+}
+
+.btns {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(20px);
+}
+
+.imgsBtn {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.whiteBtn {
+    background-color: #A3A3A3;
+}
+
+.blackBtn {
+    background-color: #1C1C1E;
+}
+
+.greenBtn {
+    background-color: #4C6A47;
+}
+
+.blueBtn {
+    background-color: #187BA9;
+}
+
+.pinkBtn {
+    background-color: #D75C77;
+}
+
+.addBtn {
+    padding: 13px 32px;
+    border-radius: 20px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: 2px solid transparent;
+    transition: all .6s ease;
+    cursor: pointer;
+    font-size: var(--smallFont1);
+}
+
+.addBtn:hover {
+    background-color: var(--gold);
+    transform: translateY(-5px);
+    color: var(--black);
+}
+
+@media (min-width: 1400px){
+    .circular-sound-wave {
+        right: 80px;
+    }
+    
+    .person {
+        right: -190px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .design img {
+        height: 350px;
+    }
+
+    .soundImgs {
+        gap: 20px;
+    }
+
+    .soundImgsContent {
+        gap: 10px;
+    }
+
+    .soundIcons {
+        height: 30px;
+    }
+
+    .smartCaseIcon {
+        height: 18px;
+    }
+
+    .soundImgsContent span {
+        font-size: var(--pFont);
+    }
+
+    .circular-sound-wave {
+        right: 130px;
+    }
+
+    .person {
+        height: 400px;
+    }
+
+    .batterySvg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .buyRight {
+        height: 70%;
+    }
+
+    .airpod-img {
+        height: 300px;
+    }
+
+    .imgsBtn {
+        gap: 8px;
+    }
+
+    .btn {
+        width: 22px;
+        height: 22px;
+    }
+
+    .btns {
+        gap: 10px;
+    }
+
+    .btns button {
+        padding: 10px 28px;
+        font-size: var(--smallFont1);
+    }
+}
+
+@media (max-width: 1150px) {
+    .design img {
+        height: 300px;
+    }
+
+    .circular-sound-wave {
+        height: 87%;
+    }
+
+    .person {
+        height: 350px;
+    }
+
+    .btns {
+        transform: none;
+    }
+}
+
+@media(max-width: 1024px) {
+    .circular-sound-wave {
+        right: 60px;
+        top: 0px;
+    }
+
+    .buyRight {
+        margin-left: 100px;
+    }
+
+    .btns {
+        margin-top: 0px;
+    }
+}
+
+@media (max-width: 950px) {
+    .circular-sound-wave {
+        right: 30px;
+    }
+
+    .buyRight {
+        margin-left: 50px;
+    }
+}
+
+@media (max-width: 920px) {
+    .person {
+        left: 120px;
+    }
+
+    .buyRight {
+        margin-left: 20px;
+        height: 60%;
+    }
+
+    .airpod-img {
+        height: 250px;
+    }
+
+    .btn {
+        width: 20px;
+        height: 20px;
+        top: 25%;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .person {
+        height: 300px;
+        left: 100px;
+    }
+
+    .buy {
+        display: grid;
+    }
+}
+
+@media (max-width: 700px) {
+    .person {
+        left: 60px;
+    }
+
+    .sound,
+    .battery,
+    .buy {
+        display: flex;
+        height: 100vmax;
+        flex-direction: column;
+        gap: 50px;
+        overflow-x: hidden;
+    }
+
+    .buyLeft,
+    .batteryText,
+    .soundText {
+        order: 1;
+        margin-top: 50px;
+    }
+
+    .soundImgs,
+    .batteryImgs {
+        order: 2;
+    }
+
+    .soundImgs {
+        align-self: flex-start;
+    }
+
+    .batteryImgs {
+        align-self: flex-end;
+    }
+
+    .buyRight {
+        order: 2;
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .buyImgs {
+        width: 40%;
+        height: 250px;
+    }
+
+    .btns {
+        gap: 20px;
+    }
+
+    .btn:hover {
+        transform: none;
+        height: 23px;
+        width: 23px;
+    }
+
+    .imgsBtn {
+        order: 1;
+        flex-direction: column;
+    }
+
+    .addBtn {
+        order: 2;
+    }
+}
+
+@media (max-width: 570px) {
+    .comfort {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        overflow-x: hidden;
+    }
+
+    .comfortText {
+        order: 1;
+    }
+
+    .comfortImgs {
+        order: 2;
+        justify-content: center;
+    }
+
+    .circular-sound-wave {
+        transform: translateX(50px);
+    }
+
+    .person {
+        transform: translateX(-40px);
+    }
+}
+
+@media (max-width: 440px) {
+    .design {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        overflow-x: hidden;
+    }
+
+    .designText {
+        order: 1;
+    }
+
+    .design img {
+        order: 2;
+        height: 250px;
+    }
+
+    .airpod-img {
+        height: 200px;
+    }
+
+    .buyImgs {
+        height: 200px;
+        margin-right: 15px;
+    }
+}
+
+@media(max-width: 425px) {
+    .airpod-img {
+        height: 100%;
+    }
+
+    .buyImgs {
+        margin-right: 20px;
+    }
+}
+
+@media(max-width: 375px) {
+    .buyImgs {
+        margin-right: 50px;
+    }
+
+    .btns {
+        flex-direction: column;
+    }
+
+    .imgsBtn {
+        flex-direction: row;
+    }
+}
+
+@media(max-width: 320px) {
+    .person {
+        height: 200px;
+    }
+
+    .airpod-img {
+        height: 150px;
+    }
+
+    .buyRight {
+        width: 100vw;
+        right: 10px;
+    }
+
+    .buyImgs {
+        width: 30%;
+        height: 150px;
+        margin-right: 50px;
+    }
+
+    .addBtn {
+        padding: 8px 10px;
+    }
+}

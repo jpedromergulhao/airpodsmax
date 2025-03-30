@@ -1,0 +1,147 @@
+.footer {
+    background-color: var(--grayOne);
+    color: var(--grayThree);
+    padding: 30px 150px;
+    padding-top: 100px;
+    width: 100vw;
+    justify-self: center;
+}
+
+.links {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 0px 100px;
+    margin: auto;
+}
+
+.linkSection {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: var(--smallFont2);
+    width: auto;
+}
+
+.linkSection h6 {
+    color: var(--grayThree);
+    font-size: var(--smallFont2);
+    margin-bottom: 8px;
+}
+
+.rights {
+    display: flex;
+    margin-top: 20px;
+    padding: 20px 0;
+    justify-content: space-between;
+    border-top: solid 2px var(--grayThree);
+    font-size: var(--smallFont2);
+}
+
+.rights div {
+    display: flex;
+    gap: 10px;
+}
+
+.rights div a,
+.linkSection a {
+    color: var(--grayThree);
+    transition: all .2s ease;
+    display: inline-block;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.rights div a:hover,
+.linkSection a:hover {
+    color: var(--grayTwo);
+}
+
+.credits {
+    margin: auto;
+    font-size: var(--smallFont2);
+}
+
+@media (max-width: 1150px) {
+    .footer {
+        padding: 30px 80px;
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 950px) {
+
+    .footer {
+        padding: 30px 40px;
+    }
+
+    .links {
+        display: block;
+    }
+
+    .linkSection {
+        background-color: var(--white);
+        padding: 5px;
+        margin-top: 2px;
+        border: 1px solid var(--grayThree);
+    }
+
+    .linkSection a {
+        display: none;
+    }
+
+    .linkSection h6 {
+        cursor: pointer;
+        position: relative;
+        padding-right: 20px;
+    }
+
+    .linkSection h6::after {
+        content: '\25BC';
+        /* Downward arrow symbol */
+        position: absolute;
+        right: 0;
+    }
+
+    .linkSection.active a {
+        display: block;
+    }
+}
+
+@media (max-width: 920px) {
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .rights {
+        display: grid;
+        gap: 10px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 440px) {
+    .footer {
+        padding: 50px 5px 20px 5px;
+    }
+
+    .links {
+        padding: 0;
+    }
+
+    .rights {
+        padding: 20px 0;
+    }
+}
+
+@media(max-width: 375px) {
+    .rights div {
+        gap: 5px
+    }
+}
+
+@media(max-width: 320px) {
+    .rights div {
+        gap: 1px
+    }
+}

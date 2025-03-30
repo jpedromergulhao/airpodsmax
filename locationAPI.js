@@ -40,6 +40,8 @@ export const updateLocation = (address) => {
         region: address.region,
         state_code: address.state_code,
         county: address.county,
+        province: address.province,
+        territory: address.territory,
         //country formats
         country: address.country,
         country_code: address.country_code

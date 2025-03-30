@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //Getting data from the local storage
   const bagItems = JSON.parse(localStorage.getItem("bagItems")) || [];
+
+  // If the shopping bag is empty, return to the home page
+  if (bagItems.length === 0) {
+    alert('Your bag is empty, please add a product');
+    window.location.href = './index.html';
+  }
+
   const totalPrice = localStorage.getItem("totalPrice") || "0";
   const totalGrand = document.querySelector(".price");
   const actionArea = document.querySelector(".actionArea");
@@ -60,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const location = getLocation();
-      console.log(location);
 
       if (!location || !(location.city || location.town || location._normalized_city || location.normalized_city || location.county || location.municipality || location.village || location.suburb)) {
         showZipCodeError(zipCode);
@@ -465,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   callback("US");
                 }
               },
-              utilsScript: "./intlTelInputWithUtils.min.js"
+              utilsScript: "./libraries/intlTelInputWithUtils.min.js"
             });
           }, 100);
 
@@ -628,7 +634,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cardInput.placeholder = 'Credit/Debit Card Number';
     cardInput.maxLength = '19'; // UnionPay (China) and JCB can have 19 digits
     cardInput.required = true;
-    cardInput.addEventListener('input', (event) => removeLetters(event));
+    cardInput.addEventListener('input', (event) => handleCardInput(event));
 
     const minorInputsContainer = document.createElement('div');
     minorInputsContainer.className = 'width minorInputsContainer';
@@ -643,6 +649,11 @@ document.addEventListener('DOMContentLoaded', () => {
     expirationInput.required = true;
     expirationInput.addEventListener('input', (event) => handleExpInput(event));
 
+    // Creating CVV container
+    const cvvContainer = document.createElement('div');
+    cvvContainer.className = 'cvv-container';
+
+    // Creating CVV input
     const cvvInput = document.createElement('input');
     cvvInput.className = 'inputs minorInputs';
     cvvInput.type = 'text';
@@ -653,7 +664,34 @@ document.addEventListener('DOMContentLoaded', () => {
     cvvInput.required = true;
     cvvInput.addEventListener('input', (event) => removeLetters(event));
 
-    minorInputsContainer.append(expirationInput, cvvInput);
+    // Creating help icon
+    const helpIcon = document.createElement('span');
+    helpIcon.className = 'help-icon';
+    helpIcon.textContent = '?';
+
+    // Creating tooltip
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+
+    const tolltipImg = document.createElement('img');
+    tolltipImg.src = './assets/cvv.png';
+    tolltipImg.alt = 'CVV illustration';
+
+    const tooltipP = document.createElement('p');
+    tooltipP.textContent = 'The CVV is a 3 or 4 digit code located on the back of your card.';
+
+    tooltip.append(tolltipImg, tooltipP);
+
+    // Adding event to display tooltip on mouseover
+    helpIcon.addEventListener('mouseover', () => {
+      tooltip.style.display = 'block';
+    });
+    helpIcon.addEventListener('mouseout', () => {
+      tooltip.style.display = 'none';
+    });
+
+    cvvContainer.append(cvvInput, helpIcon, tooltip);
+    minorInputsContainer.append(expirationInput, cvvContainer);
     formInputs.append(cardInput, minorInputsContainer);
     cardForm.append(cardLabel, formInputs);
 
@@ -783,6 +821,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // Appending the payment container to the document
     actionArea.appendChild(paymentDiv);
   }
+
+  function handleCardInput(event) {
+    formatCardNumber(event);
+    // updateCardLogo(event);
+  }
+
+  // Format the card number with spaces every 4 digits
+  function formatCardNumber(event) {
+    removeLetters(event);
+    let value = event.target.value.replace(/\s/g, ''); // Remove old spaces
+    value = value.replace(/(\d{4})/g, '$1 ').trim(); // Add space after every 4 numbers
+    event.target.value = value;
+  }
+
+  // let fetchController = null; // To control requests in progress
+
+  // async function updateCardLogo(event) {
+  //   const cardNumber = event.target.value.replace(/\s/g, '').slice(0, 6);
+  //   if (!cardNumber) return;
+
+  //   // Cancels previous requests, if any
+  //   if (fetchController) {
+  //     fetchController.abort();
+  //     fetchController = null;
+  //   }
+
+  //   // Creates a new controller for the current request
+  //   fetchController = new AbortController();
+  //   const signal = fetchController.signal;
+
+  //   try {
+  //     const response = await fetch(`https://lookup.binlist.net/${cardNumber}`, {
+  //       method: 'GET',
+  //       headers: { 'Accept': 'application/json' },
+  //       signal, // Pass the signal to allow cancellation
+  //     });
+
+  //     if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+  //     const data = await response.json();
+  //     console.log("Dados recebidos:", data);
+  //     const brand = data.scheme;
+
+  //     const logos = {
+  //       visa: 'Visa-logo.png',
+  //       mastercard: 'Mastercard-logo.png',
+  //       amex: 'American_Express-logo.png',
+  //       discover: 'Discover-logo.png',
+  //       jcb: 'JCB-logo.png',
+  //       diners: 'Diners_Club-logo.png',
+  //       unionpay: 'UnionPay-logo.png',
+  //       elo: 'Elo-logo.png',
+  //       rupay: 'Rupay-logo.png',
+  //       hipercard: 'Hipercard-logo.png'
+  //     };
+
+  //     const logo = logos[brand] || 'credit_card_logos.png';
+  //     document.querySelector('#card').style.backgroundImage = `url(./assets/${logo})`;
+
+  //   } catch (error) {
+  //     if (error.name === 'AbortError') {
+  //       console.warn("Requisição cancelada.");
+  //     } else {
+  //       console.error("Erro na requisição:", error);
+  //     }
+  //   }
+  // }
 
   function handleExpInput(event) {
     const input = event.target;

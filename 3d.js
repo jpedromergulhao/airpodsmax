@@ -87,250 +87,96 @@ function adjustModelPosition() {
     const confortImgsVisible = confortImgs.getBoundingClientRect().bottom > 0;
     const batteryImgsVisible = batteryImgs.getBoundingClientRect().bottom > 0;
 
-    if (width <= 1300 && width > 1150) {
-        airPod.position.set(4.5, -0.3, -30);
-    } else if (width <= 1150 && width > 1024) {
-        airPod.position.set(4, -0.3, -30);
-    } else if (width <= 1024 && width > 950) {
-        airPod.position.set(3.5, -0.3, -30);
-    } else if (width <= 950 && width > 920) {
-        airPod.position.set(3.5, -0.3, -35);
-    } else if (width <= 920 && width > 768) {
-        if (headerImgVisible) airPod.position.set(0, -0.3, -35);
-    } else if (width <= 768 && width > 570) {
-        if (headerImgVisible) airPod.position.set(0, -0.3, -40);
-    } else if (width <= 570 && width > 440) {
-        if (headerImgVisible) airPod.position.set(0, -0.3, -45);
-    } else if (width <= 440 && width > 375) {
-        if (headerImgVisible) airPod.position.set(0, -0.3, -80);
-    }
+    const positions = {
+        header: [
+            { maxWidth: 1300, minWidth: 1150, position: [4.5, -0.3, -30] },
+            { maxWidth: 1150, minWidth: 1024, position: [4, -0.3, -30] },
+            { maxWidth: 1024, minWidth: 950, position: [3.5, -0.3, -30] },
+            { maxWidth: 950, minWidth: 920, position: [3.5, -0.3, -35] },
+            { maxWidth: 920, minWidth: 768, position: [0, -0.3, -35], condition: headerImgVisible },
+            { maxWidth: 768, minWidth: 570, position: [0, -0.3, -40], condition: headerImgVisible },
+            { maxWidth: 570, minWidth: 440, position: [0, -0.3, -45], condition: headerImgVisible },
+            { maxWidth: 440, position: [0, -0.3, -80], condition: headerImgVisible }
+        ],
+        design: [
+            { maxWidth: 1300, minWidth: 1150, position: [-2.5, 0, -25] },
+            { maxWidth: 1150, minWidth: 1024, position: [-3, 0, -32] },
+            { maxWidth: 1024, minWidth: 950, position: [-2.5, 0, -32] },
+            { maxWidth: 950, minWidth: 920, position: [-2.5, 0, -32] },
+            { maxWidth: 920, minWidth: 768, position: [-2, 0, -32] },
+            { maxWidth: 768, minWidth: 570, position: [-1.5, 0, -32] },
+            { maxWidth: 570, minWidth: 440, position: [-1, 0, -32] },
+            { maxWidth: 440, position: [-5, 0, -32] }
+        ],
+        sound: [
+            { maxWidth: 1300, minWidth: 1150, position: [3, 0, -30] },
+            { maxWidth: 1150, minWidth: 1024, position: [3, 0, -35] },
+            { maxWidth: 1024, minWidth: 950, position: [2.5, 0, -35] },
+            { maxWidth: 950, minWidth: 920, position: [2.5, 0, -40] },
+            { maxWidth: 920, minWidth: 768, position: [2, 0, -40] },
+            { maxWidth: 768, minWidth: 700, position: [1.5, 0, -45] },
+            { maxWidth: 700, minWidth: 570, position: [1.5, 0, -30], condition: soundImgVisible },
+            { maxWidth: 570, minWidth: 440, position: [1.5, 0, -35], condition: soundImgVisible },
+            { maxWidth: 440, position: [1.5, 0, -80], condition: soundImgVisible }
+        ],
+        comfort: [
+            { maxWidth: 1300, minWidth: 1150, position: [6.6, 1.6, -50] },
+            { maxWidth: 1150, minWidth: 1024, position: [7.2, 1.7, -60] },
+            { maxWidth: 1024, minWidth: 950, position: [7.2, 1.7, -60] },
+            { maxWidth: 950, minWidth: 920, position: [7.3, 1.7, -60] },
+            { maxWidth: 920, minWidth: 768, position: [6.5, 1.7, -60] },
+            { maxWidth: 768, minWidth: 700, position: [6.7, 1.7, -75] },
+            { maxWidth: 700, minWidth: 570, position: [5.7, 1.7, -75] },
+            { maxWidth: 570, minWidth: 375, position: [0.7, 1.7, -100], condition: confortImgsVisible, rotation: [3.12] },
+            { maxWidth: 375, minWidth: 320, position: [0.7, 1.7, -100], condition: confortImgsVisible, rotation: [3.12] },
+            { maxWidth: 320, position: [1, 1.7, -130], condition: confortImgsVisible, rotation: [3.12] }
+        ],
+        battery: [
+            { maxWidth: 1300, minWidth: 1150, position: [-3.2, 0, -25] },
+            { maxWidth: 1150, minWidth: 1024, position: [-3.2, 0, -30] },
+            { maxWidth: 1024, minWidth: 950, position: [-2.7, 0, -30] },
+            { maxWidth: 950, minWidth: 920, position: [-2.7, 0, -30] },
+            { maxWidth: 920, minWidth: 768, position: [-2.5, 0, -30] },
+            { maxWidth: 768, minWidth: 700, position: [-2, 0, -35] },
+            { maxWidth: 700, minWidth: 440, position: [-2, 0, -35], condition: batteryImgsVisible },
+            { maxWidth: 440, minWidth: 375, position: [-1, 0, -70], condition: batteryImgsVisible },
+            { maxWidth: 375, minWidth: 320, position: [-1, 0, -55], condition: batteryImgsVisible },
+            { maxWidth: 320, position: [-1, 0, -60], condition: batteryImgsVisible }
+        ]
+    };
+
+    const adjustPosition = (obj, category) => {
+        positions[category].forEach(range => {
+            if (width <= range.maxWidth && width > (range.minWidth || -Infinity)) {
+                if (!range.condition || range.condition) {
+                    obj.position.set(...range.position);
+                    if (range.rotation) obj.rotation.y = range.rotation[0];
+                }
+            }
+        });
+    };
 
     arrPosition.forEach(obj => {
-        if (obj.id === "header") {
-            if (width <= 1300 && width > 1150) {
-                obj.position.x = 4.5;
-                obj.position.y = -0.3;
-                obj.position.z = -30;
-            } else if (width <= 1150 && width > 1024) {
-                obj.position.x = 4;
-                obj.position.y = -0.3;
-                obj.position.z = -30;
-            } else if (width <= 1024 && width > 950) {
-                obj.position.x = 3.5;
-                obj.position.y = -0.3;
-                obj.position.z = -30;
-            } else if (width <= 950 && width > 920) {
-                obj.position.x = 3.5;
-                obj.position.y = -0.3;
-                obj.position.z = -35;
-            } else if (width <= 920 && width > 768) { //ajustar o condicional
-                if (headerImgVisible) {
-                    obj.position.x = 0;
-                    obj.position.y = -0.3;
-                    obj.position.z = -35;
-                } 
-            } else if (width <= 768 && width > 570) { //ajustar o condicional
-                if (headerImgVisible) {
-                    obj.position.x = 0;
-                    obj.position.y = -0.3;
-                    obj.position.z = -40;
-                } 
-            } else if (width <= 570 && width > 440) { //ajustar o condicional
-                if (headerImgVisible) {
-                    obj.position.x = 0;
-                    obj.position.y = -0.3;
-                    obj.position.z = -45;
-                } 
-            } else if (width <= 440) { //ajustar o condicional
-                if (headerImgVisible) {
-                    obj.position.x = 0;
-                    obj.position.y = -0.3;
-                    obj.position.z = -80;
-                } 
-            } 
-        } else if (obj.id === "design") {
-            if (width <= 1300 && width > 1150) {
-                obj.position.x = -2.5;
-                obj.position.y = 0;
-                obj.position.z = -25;
-            } else if (width <= 1150 && width > 1024) {
-                obj.position.x = -3;
-                obj.position.y = -0;
-                obj.position.z = -32;
-            } else if (width <= 1024 && width > 950) {
-                obj.position.x = -2.5;
-                obj.position.y = 0;
-                obj.position.z = -32;
-            } else if (width <= 950 && width > 920) {
-                obj.position.x = -2.5; 
-                obj.position.y = 0;
-                obj.position.z = -32;
-            } else if (width <= 920 && width > 768) {
-                obj.position.x = -2;
-                obj.position.y = 0;
-                obj.position.z = -32;
-            } else if (width <= 768 && width > 570) {
-                obj.position.x = -1.5;
-                obj.position.y = 0;
-                obj.position.z = -32;
-            } else if (width <= 570 && width > 440) {
-                obj.position.x = -1;
-                obj.position.y = 0;
-                obj.position.z = -32;
-            } else if (width <= 440) { 
-                obj.position.x = -5;
-                obj.position.y = 0;
-                obj.position.z = -32;
-            } 
-        } else if (obj.id === "sound") {
-            if (width <= 1300 && width > 1150) {
-                obj.position.x = 3;
-                obj.position.y = 0;
-                obj.position.z = -30;
-            } else if (width <= 1150 && width > 1024) {
-                obj.position.x = 3;
-                obj.position.y = 0;
-                obj.position.z = -35;
-            } else if (width <= 1024 && width > 950) {
-                obj.position.x = 2.5;
-                obj.position.y = 0;
-                obj.position.z = -35;
-            } else if (width <= 950 && width > 920) {
-                obj.position.x = 2.5;
-                obj.position.y = 0;
-                obj.position.z = -40;
-            } else if (width <= 920 && width > 768) {
-                obj.position.x = 2;
-                obj.position.y = 0;
-                obj.position.z = -40;
-            } else if (width <= 768 && width > 700) {
-                obj.position.x = 1.5;
-                obj.position.y = 0;
-                obj.position.z = -45;
-            } else if (width <= 700 && width > 570) { //ajustar o condicional
-                if (soundImgVisible) {
-                    obj.position.x = 1.5;
-                    obj.position.y = 0;
-                    obj.position.z = -30;
-                }
-            } else if (width <= 570 && width > 440) { //ajustar o condicional
-                if (soundImgVisible) {
-                    obj.position.x = 1.5;
-                    obj.position.y = 0;
-                    obj.position.z = -35;
-                } 
-            } else if (width <= 440) { //ajustar o condicional
-                if (soundImgVisible) {
-                    obj.position.x = 1.5;
-                    obj.position.y = 0;
-                    obj.position.z = -80;
-                } 
-            } 
-        } else if (obj.id === "comfort") {
-            if (width <= 1300 && width > 1150) {
-                obj.position.x = 6.6;
-                obj.position.y = 1.6;
-                obj.position.z = -50;
-            } else if (width <= 1150 && width > 1024) {
-                obj.position.x = 7.2;
-                obj.position.y = 1.7;
-                obj.position.z = -60;
-            } else if (width <= 1024 && width > 950) {
-                obj.position.x = 7.2;
-                obj.position.y = 1.7;
-                obj.position.z = -60;
-            } else if (width <= 950 && width > 920) {
-                obj.position.x = 7.3;
-                obj.position.y = 1.7;
-                obj.position.z = -60;
-            } else if (width <= 920 && width > 768) {
-                obj.position.x = 6.5;
-                obj.position.y = 1.7;
-                obj.position.z = -60;
-            } else if (width <= 768 && width > 700) {
-                obj.position.x = 6.7;
-                obj.position.y = 1.7;
-                obj.position.z = -75;
-            } else if (width <= 700 && width > 570) {
-                obj.position.x = 5.7;
-                obj.position.y = 1.7;
-                obj.position.z = -75;
-            } else if(width <= 570 && width > 375){ //ajustar o condicional
-                if (confortImgsVisible) {
-                    obj.position.x = 0.7;
-                    obj.position.y = 1.7;
-                    obj.position.z = -100;
-                    obj.rotation.y = 3.12;
-                } 
-            } else if(width <= 375 && width > 320){ //ajustar o condicional
-                if (confortImgsVisible) {
-                    obj.position.x = 0.7;
-                    obj.position.y = 1.7;
-                    obj.position.z = -100;
-                    obj.rotation.y = 3.12;
-                }
-            } else if (width <= 320) { //ajustar o condicional
-                if (confortImgsVisible) {
-                    obj.position.x = 1;
-                    obj.position.y = 1.7;
-                    obj.position.z = -130;
-                    obj.rotation.y = 3.12;
-                } 
-            } 
-        } else if (obj.id === "battery") {
-            if (width <= 1300 && width > 1150) {
-                obj.position.x = -3.2;
-                obj.position.y = 0;
-                obj.position.z = -25;
-            } else if (width <= 1150 && width > 1024) {
-                obj.position.x = -3.2;
-                obj.position.y = 0;
-                obj.position.z = -30;
-            } else if (width <= 1024 && width > 950) {
-                obj.position.x = -2.7;
-                obj.position.y = 0;
-                obj.position.z = -30;
-            } else if (width <= 950 && width > 920) {
-                obj.position.x = -2.7;
-                obj.position.y = 0;
-                obj.position.z = -30;
-            } else if (width <= 920 && width > 768) {
-                obj.position.x = -2.5;
-                obj.position.y = 0;
-                obj.position.z = -30;
-            } else if (width <= 768 && width > 700) {
-                obj.position.x = -2;
-                obj.position.y = 0;
-                obj.position.z = -35;
-            } else if (width <= 700 && width > 440) { //ajustar o condicional
-                if (batteryImgsVisible) {
-                    obj.position.x = -2;
-                    obj.position.y = 0;
-                    obj.position.z = -35;
-                } 
-            }  else if (width <= 440 && width > 375) { //ajustar o condicional
-                if (batteryImgsVisible) {
-                    obj.position.x = -1;
-                    obj.position.y = 0;
-                    obj.position.z = -70;
-                } 
-            } else if (width <= 375 && width > 320) { //ajustar o condicional
-                if (batteryImgsVisible) {
-                    obj.position.x = -1;
-                    obj.position.y = 0;
-                    obj.position.z = -55;
-                } 
-            } else if (width <= 320) { //ajustar o condicional
-                if (batteryImgsVisible) {
-                    obj.position.x = -1;
-                    obj.position.y = 0;
-                    obj.position.z = -60;
-                } 
-            } 
-        } else {
-            console.error("An error happened", error);
+        switch (obj.id) {
+            case "header":
+                adjustPosition(obj, "header");
+                break;
+            case "design":
+                adjustPosition(obj, "design");
+                break;
+            case "sound":
+                adjustPosition(obj, "sound");
+                break;
+            case "comfort":
+                adjustPosition(obj, "comfort");
+                break;
+            case "battery":
+                adjustPosition(obj, "battery");
+                break;
+            default:
+                console.error("An error happened", error);
         }
-    })
+    });
 }
 
 window.addEventListener('resize', adjustModelPosition);

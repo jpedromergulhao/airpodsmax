@@ -4,8 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Discover the ultimate listening experience with AirPods Max. Premium sound quality, active noise cancellation, and seamless Apple ecosystem integration. Shop now!">
   <link rel="icon" type="image/png" href="./assets/apple-logo.png">
-  <link href="./styles/style.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./styles/style.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
@@ -20,7 +22,13 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <link rel="stylesheet" type="text/css" href="./styles/bagList.css">
+  <link rel="stylesheet" type="text/css" href="./styles/index/index.css">
+  <link rel="stylesheet" type="text/css" href="./styles//index/bagList.css">
+  <link rel="stylesheet" type="text/css" href="./styles/footer.css">
+  <link rel="stylesheet" type="text/css" href="./styles/index/nav.css">
+  <link rel="stylesheet" type="text/css" href="./styles/index/sections.css">
+  <link rel="stylesheet" type="text/css" href="./styles/index/header.css">
+  <link rel="stylesheet" type="text/css" href="./styles/index/main.css">
   <title>Apple AirPods Max</title>
 </head>
 
@@ -39,7 +47,7 @@
     </a>
     <div class="rightContent">
       <div class="bag">
-        <img src="./assets/bag-icon.png" alt="Bag icon">
+        <img src="./assets/bag-icon.png" alt="Bag icon" loading="lazy">
         <span class="quantity">0</span>
       </div>
       <ul class="menu">
@@ -85,13 +93,13 @@
       <a href="#buy" class="headerBtn">Buy</a>
     </div>
     <img class="soundWave" src="./assets/Sound-Wave.png" alt="Sound wave" data-aos="zoom-in" data-aos-duration="1200"
-      data-aos-delay="200">
+      data-aos-delay="200" loading="lazy">
   </header>
 
   <main>
     <section class="design section" id="design">
       <img src="./assets/airpods-white-side.png" alt="White AirPods Max" data-aos="zoom-in" data-aos-duration="1200"
-        data-aos-delay="200">
+        data-aos-delay="200" loading="lazy">
       <div class="designText" data-aos="fade-left" data-aos-duration="1200">
         <h3>Premium, Iconic Design</h3>
         <p>
@@ -115,15 +123,15 @@
       </div>
       <div class="soundImgs" data-aos="fade-left" data-aos-duration="1200">
         <div class="soundImgsContent">
-          <img src="./assets/contrast_2_group.png" alt="Noise Cancellation with Transparency mode" class="soundIcons">
+          <img src="./assets/contrast_2_group.png" alt="Noise Cancellation with Transparency mode" class="soundIcons" loading="lazy">
           <span>Pro‑level Active Noise Cancellation with Transparency Mode</span>
         </div>
         <div class="soundImgsContent">
-          <img src="./assets/spatialaudio.png" alt="Spatial Audio" class="soundIcons">
+          <img src="./assets/spatialaudio.png" alt="Spatial Audio" class="soundIcons" loading="lazy">
           <span>Personalized Spatial Audio with Dynamic Head Tracking</span>
         </div>
         <div class="soundImgsContent">
-          <img src="./assets/airpodsmax_case.png" alt="Smart Case" class="smartCaseIcon">
+          <img src="./assets/airpodsmax_case.png" alt="Smart Case" class="smartCaseIcon" loading="lazy">
           <span>Smart Case</span>
         </div>
       </div>
@@ -140,8 +148,8 @@
         </p>
       </div>
       <div class="comfortImgs" data-aos="zoom-in" data-aos-duration="1200">
-        <img src="./assets/circular-sound-wave.png" alt="Circular sound wave" class="circular-sound-wave">
-        <img src="./assets/black-smiling-man-profile.png" alt="Black man smiling" class="person">
+        <img src="./assets/circular-sound-wave.png" alt="Circular sound wave" class="circular-sound-wave" loading="lazy">
+        <img src="./assets/black-smiling-man-profile.png" alt="Black man smiling" class="person" loading="lazy">
       </div>
     </section>
     <section class="battery section" id="battery">
@@ -206,11 +214,11 @@
       </div>
       <div class="buyRight" data-aos="fade-left" data-aos-duration="1200">
         <div class="buyImgs">
-          <img class="airpod-img black" src="./assets/airpods-black.png" alt="AirPods Max">
-          <img class="airpod-img white" src="./assets/airpods-white.png" alt="AirPods Max">
-          <img class="airpod-img green" src="./assets/airpods-green.png" alt="AirPods Max">
-          <img class="airpod-img blue" src="./assets/airpods-blue.png" alt="AirPods Max">
-          <img class="airpod-img pink" src="./assets/airpods-pink.png" alt="AirPods Max">
+          <img class="airpod-img black" src="./assets/airpods-black.png" alt="AirPods Max Black" loading="lazy">
+          <img class="airpod-img white" src="./assets/airpods-white.png" alt="AirPods Max White" loading="lazy">
+          <img class="airpod-img green" src="./assets/airpods-green.png" alt="AirPods Max Green" loading="lazy">
+          <img class="airpod-img blue" src="./assets/airpods-blue.png" alt="AirPods Max Blue" loading="lazy">
+          <img class="airpod-img pink" src="./assets/airpods-pink.png" alt="AirPods Max Pink" loading="lazy">
         </div>
         <div class="btns">
           <ul class="imgsBtn">
@@ -378,6 +386,23 @@
   <script src="./baglist.js" defer></script>
   <script type="module" src="./3d.js"></script>
   <script src="./script.js"></script>
+  <script src="./footer.js"></script>
+  <noscript>
+    <style>
+      body * {
+        display: none !important;
+      }
+
+      body::before {
+        content: "This site requires JavaScript to function properly. Please enable JavaScript or use a supported browser.";
+        display: block;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 50px;
+      }
+    </style>
+  </noscript>
 </body>
 
 </html>
