@@ -23,7 +23,18 @@ const menuIcon = document.getElementsByTagName("svg")[1];
 const menu = document.getElementsByClassName("menu")[0];
 menuIcon.onclick = () => {
     menuIcon.classList.toggle("bx-x");
-    menu.classList.toggle("open");
+
+    if (menu.style.display === 'flex') {
+        menu.classList.remove("open");
+        setTimeout(() => {
+            menu.style.display = 'none';
+        }, 600);
+    } else {
+        menu.style.display = 'flex';
+        setTimeout(() => {
+            menu.classList.add("open");
+        }, 10);
+    }
 }
 
 //Buy section

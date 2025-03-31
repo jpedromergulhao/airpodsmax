@@ -1,225 +1,249 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
-import { gsap } from 'https://cdn.skypack.dev/gsap';
+import * as THREE from './libraries/three/three.module.js';
+import { GLTFLoader } from './libraries/three/GLTFLoader.js';
 
-const width = window.innerWidth, height = window.innerHeight;
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setSize(width, height);
-document.getElementsByClassName("container3d")[0].appendChild(renderer.domElement);
-const camera = new THREE.PerspectiveCamera(10, width / height, 0.1, 1000);
-camera.position.z = 13;
-const scene = new THREE.Scene();
-let airPod;
-let is3DModelLoaded = false;
-const buySection = document.getElementById('buy');
-const buySectionPosition = buySection.offsetTop - window.innerHeight * 0.5;
-const batterySection = document.getElementById('battery');
-const batterySectionPosition = batterySection.offsetTop - window.innerHeight * 0.1;
+document.addEventListener('DOMContentLoaded', () => {
 
-//Checks if the 3d model has already been loaded 
-const loadElement = document.querySelector(".loadingScreen");
-function checkModelLoaded() {
-    if (is3DModelLoaded) {
-        document.getElementById("container3d").style.display = "block";
-        loadElement.style.display = "none";
+    // Get window dimensions  
+    const width = window.innerWidth, height = window.innerHeight;
+
+    // Create the WebGL renderer with transparency enabled  
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(width, height);
+    document.getElementsByClassName("container3d")[0].appendChild(renderer.domElement);
+
+    // Set up the perspective camera  
+    const camera = new THREE.PerspectiveCamera(10, width / height, 0.1, 1000);
+    camera.position.z = 13;
+
+    // Create the scene  
+    const scene = new THREE.Scene();
+
+    // 3D model variables  
+    let airPod;
+    let is3DModelLoaded = false;
+
+    // Get sections and their respective positions for interaction  
+    const buySection = document.getElementById('buy');
+    const buySectionPosition = buySection.offsetTop - window.innerHeight * 0.5;
+
+    const batterySection = document.getElementById('battery');
+    const batterySectionPosition = batterySection.offsetTop - window.innerHeight * 0.1;
+
+    // Load 3D model  
+    const loader = new GLTFLoader();
+
+    // Add ambient light to the scene  
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+    scene.add(ambientLight);
+
+    // Add directional light from the top  
+    const topLight = new THREE.DirectionalLight(0xffffff, 1);
+    topLight.position.set(500, 500, 500);
+    scene.add(topLight);
+
+    //Checks if the 3d model has already been loaded 
+    const loadElement = document.querySelector(".loadingScreen");
+    function checkModelLoaded() {
+        if (is3DModelLoaded) {
+            document.getElementById("container3d").style.display = "block";
+            loadElement.style.display = "none";
+        }
     }
-}
 
-//AirPod position and rotation for each section
-let arrPosition = [
-    { id: "header", position: { x: 3.6, y: -0.4, z: -30 }, rotation: { x: 0, y: 3.8, z: 0 } },
-    { id: "design", position: { x: -2.5, y: 0, z: -30 }, rotation: { x: 0, y: 3.2, z: 0 } },
-    { id: "sound", position: { x: 3, y: 0, z: -40 }, rotation: { x: 0, y: 1.5, z: 0 } },
-    { id: "comfort", position: { x: 6.5, y: 0.9, z: -55 }, rotation: { x: -0.02, y: 3.05, z: 0.2 } },
-    { id: "battery", position: { x: -3, y: 0, z: -30 }, rotation: { x: 0, y: 2.5, z: 0 } },
-];
+    // Initial AirPod position and rotation for each section
+    let arrPosition = [
+        { id: "header", position: { x: 3.6, y: -0.4, z: -30 }, rotation: { x: 0, y: 3.8, z: 0 } },
+        { id: "design", position: { x: -2.5, y: 0, z: -30 }, rotation: { x: 0, y: 3.2, z: 0 } },
+        { id: "sound", position: { x: 3, y: 0, z: -40 }, rotation: { x: 0, y: 1.5, z: 0 } },
+        { id: "comfort", position: { x: 6.5, y: 0.9, z: -55 }, rotation: { x: -0.02, y: 3.05, z: 0.2 } },
+        { id: "battery", position: { x: -3, y: 0, z: -30 }, rotation: { x: 0, y: 2.5, z: 0 } },
+    ];
 
-const loader = new GLTFLoader();
-loader.load("./assets/airpods_max_clone.glb",
-    function (gltf) {
-        airPod = gltf.scene;
-        scene.add(airPod);
-        airPod.position.set(3.6, -0.4, -30);
-        airPod.rotation.set(0, 3.8, 0);
-        airPod.visible = true;
-        is3DModelLoaded = true;
-        checkModelLoaded(); 
-        adjustModelPosition();
-    },
-    function (xhr) {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    },
-    function (error) {
-        console.error('An error happened', error);
+    loader.load("./assets/airpods_max_clone.glb",
+        function (gltf) {
+            airPod = gltf.scene;
+            scene.add(airPod);
+            airPod.position.set(3.6, -0.4, -30);
+            airPod.rotation.set(0, 3.8, 0);
+            airPod.visible = true;
+            is3DModelLoaded = true;
+            checkModelLoaded();
+            adjustModelPosition();
+        },
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        function (error) {
+            console.error('An error happened', error);
+        }
+    );
+
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
     }
-);
+    animate();
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
-scene.add(ambientLight);
-const topLight = new THREE.DirectionalLight(0xffffff, 1);
-topLight.position.set(500, 500, 500);
-scene.add(topLight);
+    //3d model responsiveness
+    function adjustModelPosition() {
 
-function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-}
-animate();
+        // 3d model inital position when the user enters in the website
+        if (width >= 1150) {
+            airPod.position.set(3.6, -0.4, -30);
+        } else if (width >= 950) {
+            airPod.position.set(3.5, -0.3, -35);
+        } else if (width >= 570) {
+            airPod.position.set(10, -0.3, -40);
+        } else if (width >= 320) {
+            airPod.position.set(10, -0.3, -60);
+        }
 
-window.addEventListener('resize', () => {
-    const newWidth = window.innerWidth;
-    const newHeight = window.innerHeight;
-    renderer.setSize(newWidth, newHeight);
-    camera.aspect = newWidth / newHeight;
-    camera.updateProjectionMatrix();
-    adjustModelPosition();
-});
+        // Responsivness of the 3d model when the user goes to the other sections
+        arrPosition.forEach(obj => {
+            switch (obj.id) {
+                case "header":
+                    obj.position = width >= 1150 ? { x: 3.6, y: -0.4, z: -30 } :
+                        width >= 950 ? { x: 3.5, y: -0.3, z: -35 } :
+                            width >= 570 ? { x: 0, y: -0.3, z: -40 } :
+                                width >= 320 ? { x: 0, y: -0.3, z: -60 } :
+                                    obj.position;
 
-//3d model responsiveness
-function adjustModelPosition() {
-    const headerImg = document.querySelector(".soundWave");
-    const soundImgs = document.querySelector(".soundImgs");
-    const batteryImgs = document.querySelector(".batteryImgs");
-    const confortImgs = document.querySelector(".comfortImgs");
+                    break;
 
-    const headerImgVisible = headerImg.getBoundingClientRect().bottom > 0;
-    const soundImgVisible = soundImgs.getBoundingClientRect().bottom > 0;
-    const confortImgsVisible = confortImgs.getBoundingClientRect().bottom > 0;
-    const batteryImgsVisible = batteryImgs.getBoundingClientRect().bottom > 0;
+                case "design":
+                    obj.position = width >= 1150 ? { x: -2.5, y: 0, z: -30 } :
+                        width >= 1024 ? { x: -2.5, y: 0, z: -35 } :
+                            width >= 950 ? { x: -2.5, y: 0, z: -40 } :
+                                width >= 920 ? { x: -2, y: 0, z: -35 } :
+                                    width >= 768 ? { x: -1.5, y: 0, z: -35 } :
+                                        width >= 570 ? { x: -1.2, y: 0, z: -35 } :
+                                            width >= 320 ? { x: 10, y: 0, z: -35 } : obj.position;
 
-    const positions = {
-        header: [
-            { maxWidth: 1300, minWidth: 1150, position: [4.5, -0.3, -30] },
-            { maxWidth: 1150, minWidth: 1024, position: [4, -0.3, -30] },
-            { maxWidth: 1024, minWidth: 950, position: [3.5, -0.3, -30] },
-            { maxWidth: 950, minWidth: 920, position: [3.5, -0.3, -35] },
-            { maxWidth: 920, minWidth: 768, position: [0, -0.3, -35], condition: headerImgVisible },
-            { maxWidth: 768, minWidth: 570, position: [0, -0.3, -40], condition: headerImgVisible },
-            { maxWidth: 570, minWidth: 440, position: [0, -0.3, -45], condition: headerImgVisible },
-            { maxWidth: 440, position: [0, -0.3, -80], condition: headerImgVisible }
-        ],
-        design: [
-            { maxWidth: 1300, minWidth: 1150, position: [-2.5, 0, -25] },
-            { maxWidth: 1150, minWidth: 1024, position: [-3, 0, -32] },
-            { maxWidth: 1024, minWidth: 950, position: [-2.5, 0, -32] },
-            { maxWidth: 950, minWidth: 920, position: [-2.5, 0, -32] },
-            { maxWidth: 920, minWidth: 768, position: [-2, 0, -32] },
-            { maxWidth: 768, minWidth: 570, position: [-1.5, 0, -32] },
-            { maxWidth: 570, minWidth: 440, position: [-1, 0, -32] },
-            { maxWidth: 440, position: [-5, 0, -32] }
-        ],
-        sound: [
-            { maxWidth: 1300, minWidth: 1150, position: [3, 0, -30] },
-            { maxWidth: 1150, minWidth: 1024, position: [3, 0, -35] },
-            { maxWidth: 1024, minWidth: 950, position: [2.5, 0, -35] },
-            { maxWidth: 950, minWidth: 920, position: [2.5, 0, -40] },
-            { maxWidth: 920, minWidth: 768, position: [2, 0, -40] },
-            { maxWidth: 768, minWidth: 700, position: [1.5, 0, -45] },
-            { maxWidth: 700, minWidth: 570, position: [1.5, 0, -30], condition: soundImgVisible },
-            { maxWidth: 570, minWidth: 440, position: [1.5, 0, -35], condition: soundImgVisible },
-            { maxWidth: 440, position: [1.5, 0, -80], condition: soundImgVisible }
-        ],
-        comfort: [
-            { maxWidth: 1300, minWidth: 1150, position: [6.6, 1.6, -50] },
-            { maxWidth: 1150, minWidth: 1024, position: [7.2, 1.7, -60] },
-            { maxWidth: 1024, minWidth: 950, position: [7.2, 1.7, -60] },
-            { maxWidth: 950, minWidth: 920, position: [7.3, 1.7, -60] },
-            { maxWidth: 920, minWidth: 768, position: [6.5, 1.7, -60] },
-            { maxWidth: 768, minWidth: 700, position: [6.7, 1.7, -75] },
-            { maxWidth: 700, minWidth: 570, position: [5.7, 1.7, -75] },
-            { maxWidth: 570, minWidth: 375, position: [0.7, 1.7, -100], condition: confortImgsVisible, rotation: [3.12] },
-            { maxWidth: 375, minWidth: 320, position: [0.7, 1.7, -100], condition: confortImgsVisible, rotation: [3.12] },
-            { maxWidth: 320, position: [1, 1.7, -130], condition: confortImgsVisible, rotation: [3.12] }
-        ],
-        battery: [
-            { maxWidth: 1300, minWidth: 1150, position: [-3.2, 0, -25] },
-            { maxWidth: 1150, minWidth: 1024, position: [-3.2, 0, -30] },
-            { maxWidth: 1024, minWidth: 950, position: [-2.7, 0, -30] },
-            { maxWidth: 950, minWidth: 920, position: [-2.7, 0, -30] },
-            { maxWidth: 920, minWidth: 768, position: [-2.5, 0, -30] },
-            { maxWidth: 768, minWidth: 700, position: [-2, 0, -35] },
-            { maxWidth: 700, minWidth: 440, position: [-2, 0, -35], condition: batteryImgsVisible },
-            { maxWidth: 440, minWidth: 375, position: [-1, 0, -70], condition: batteryImgsVisible },
-            { maxWidth: 375, minWidth: 320, position: [-1, 0, -55], condition: batteryImgsVisible },
-            { maxWidth: 320, position: [-1, 0, -60], condition: batteryImgsVisible }
-        ]
-    };
+                    break;
 
-    const adjustPosition = (obj, category) => {
-        positions[category].forEach(range => {
-            if (width <= range.maxWidth && width > (range.minWidth || -Infinity)) {
-                if (!range.condition || range.condition) {
-                    obj.position.set(...range.position);
-                    if (range.rotation) obj.rotation.y = range.rotation[0];
-                }
+                case "sound":
+                    obj.position = width >= 1150 ? { x: 3, y: 0, z: -40 } :
+                        width >= 1024 ? { x: 2.5, y: 0, z: -40 } :
+                            width >= 920 ? { x: 2, y: 0, z: -50 } :
+                                width >= 768 ? { x: 2, y: 0, z: -60 } :
+                                    width >= 700 ? { x: 1.5, y: 0, z: -45 } :
+                                        width >= 570 ? { x: 1.5, y: 0, z: -45 } :
+                                            width >= 320 ? { x: 1.5, y: 0, z: -70 } : obj.position;
+
+                    break;
+
+                case "comfort":
+                    obj.position = width >= 1150 ? { x: 6.5, y: 0.9, z: -55 } :
+                        width >= 950 ? { x: 7.7, y: 1.6, z: -75 } :
+                            width >= 920 ? { x: 6.9, y: 1.6, z: -75 } :
+                                width >= 768 ? { x: 6.8, y: 1.6, z: -85 } :
+                                    width >= 700 ? { x: 5.5, y: 1.6, z: -85 } :
+                                        width >= 375 ? { x: 0.5, y: 1.6, z: -105 } :
+                                            width >= 320 ? { x: 1, y: 1.6, z: -125 } : obj.position;
+
+                    obj.rotation.y = width <= 570 ? 3.12 : 3.05;
+
+                    break;
+
+                case "battery":
+                    obj.position = width >= 1150 ? { x: -3, y: 0, z: -30 } :
+                        width >= 1024 ? { x: -2.5, y: 0, z: -35 } :
+                            width >= 920 ? { x: -3, y: 0, z: -40 } :
+                                width >= 768 ? { x: -2.3, y: 0, z: -40 } :
+                                    width >= 440 ? { x: -1, y: 0, z: -40 } :
+                                        width >= 320 ? { x: -1, y: 0, z: -60 } :
+                                           obj.position;
+
+                    break;
+
+                default:
+                    console.error("An error happened", obj.id);
             }
         });
+    }
+
+    const moveModel = () => {
+        const sections = document.getElementsByClassName("section");
+        let currentSection;
+    
+        // Get the current section
+        Array.from(sections).forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= window.innerHeight / 3 && rect.bottom >= 0) {
+                currentSection = section.id;
+            }
+        });
+    
+        let positionActive = arrPosition.find(obj => obj.id === currentSection);
+        if (!positionActive || !airPod) return;
+    
+        let newCoordinates = positionActive;
+    
+        const headerImg = document.querySelector(".soundWave");
+    
+        // Verify if the element is visible
+        const isElementVisible = (element) => {
+            if (!element) return false;
+            const rect = element.getBoundingClientRect();
+            return rect.top >= 0 && rect.bottom <= window.innerHeight;
+        };
+    
+        // Determine the visibility of the element
+        const headerImgVisible = isElementVisible(headerImg);
+    
+        let x, y, z;
+    
+        if (newCoordinates.id === "header") {
+            if (width >= 570 && width < 950) {
+                x = headerImgVisible ? 0 : 10;
+                y = -0.3;
+                z = -40;
+            } else if (width <= 570) {
+                x = headerImgVisible ? 0 : 10;
+                y = -0.3;
+                z = -60;
+            } else {
+                ({ x, y, z } = newCoordinates.position);
+            }
+        } else {
+            ({ x, y, z } = newCoordinates.position);
+        }
+    
+        gsap.to(airPod.position, { x, y, z, duration: 2, ease: "power1.out" });
+    
+        gsap.to(airPod.rotation, {
+            x: newCoordinates.rotation ? newCoordinates.rotation.x : 0,
+            y: newCoordinates.rotation ? newCoordinates.rotation.y : 0,
+            z: newCoordinates.rotation ? newCoordinates.rotation.z : 0,
+            duration: 2,
+            ease: "power1.out"
+        });
     };
 
-    arrPosition.forEach(obj => {
-        switch (obj.id) {
-            case "header":
-                adjustPosition(obj, "header");
-                break;
-            case "design":
-                adjustPosition(obj, "design");
-                break;
-            case "sound":
-                adjustPosition(obj, "sound");
-                break;
-            case "comfort":
-                adjustPosition(obj, "comfort");
-                break;
-            case "battery":
-                adjustPosition(obj, "battery");
-                break;
-            default:
-                console.error("An error happened", error);
+    // Events
+    window.addEventListener('resize', () => {
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+        renderer.setSize(newWidth, newHeight);
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
+        adjustModelPosition();
+    });
+
+    window.addEventListener('resize', adjustModelPosition);
+
+    window.addEventListener("scroll", () => {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition >= buySectionPosition && airPod) {
+            gsap.to(airPod, { duration: 0.1, opacity: 0, onComplete: () => airPod.visible = false });
+        }
+        if (scrollPosition < batterySectionPosition && airPod && !airPod.visible) {
+            airPod.visible = true;
+            gsap.to(airPod, { duration: 1, opacity: 1 });
+        }
+        if (airPod) {
+            moveModel();
         }
     });
-}
 
-window.addEventListener('resize', adjustModelPosition);
-const moveModel = () => {
-    const sections = document.getElementsByClassName("section");
-    let currentSection;
-    Array.from(sections).forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 3 && rect.bottom >= 0) {
-            currentSection = section.id;
-        }
-    });
-    let positionActive = arrPosition.findIndex(obj => obj.id === currentSection);
-    if (positionActive !== -1 && airPod) {
-        let newCoordinates = arrPosition[positionActive];
-        gsap.to(airPod.position, {
-            x: newCoordinates.position.x,
-            y: newCoordinates.position.y,
-            z: newCoordinates.position.z,
-            duration: 2,
-            ease: "power1.out"
-        });
-        gsap.to(airPod.rotation, {
-            x: newCoordinates.rotation.x,
-            y: newCoordinates.rotation.y,
-            z: newCoordinates.rotation.z,
-            duration: 2,
-            ease: "power1.out"
-        });
-    }
-};
-
-//Hide the AirPod 3D model for the buy section
-window.addEventListener("scroll", () => {
-    const scrollPosition = window.scrollY;
-    if (scrollPosition >= buySectionPosition && airPod) {
-        gsap.to(airPod, { duration: 0.1, opacity: 0, onComplete: () => airPod.visible = false });
-    }
-    if (scrollPosition < batterySectionPosition && airPod && !airPod.visible) {
-        airPod.visible = true;
-        gsap.to(airPod, { duration: 1, opacity: 1 });
-    }
-    if (airPod) {
-        moveModel();
-    }
 });

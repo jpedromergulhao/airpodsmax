@@ -4,10 +4,6 @@
     --lineHeightP: 30px;
 }
 
-html {
-    overflow-x: hidden !important;
-}
-
 img {
     user-select: none;
 }
@@ -46,6 +42,8 @@ img {
     inset: 0;
     z-index: 1;
     pointer-events: none;
+    height: 100%;
+    width: 100%;
 }
 
 @media (max-width: 1300px) {

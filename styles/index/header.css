@@ -1,6 +1,6 @@
 header {
     background-color: var(--grayOne);
-    padding-top: 120px;
+    padding-bottom: 80px;
     gap: 2rem;
 }
 
@@ -64,7 +64,8 @@ header img {
 @media (max-width: 920px) {
     header {
         grid-template-columns: 1fr;
-        height: auto;
+        height: fit-content;
+        padding-bottom: 0;
     }
 
     .headerText {
