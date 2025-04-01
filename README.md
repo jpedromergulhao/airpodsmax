@@ -18,10 +18,20 @@ This is a responsive e-commerce website showcasing and selling AirPods Max, feat
 
 - **Accessibility**: Focused on making the website easily navigable and accessible to all users.
 
+## Backend Features
+
+- **Geolocation API (OpenCage)**: Integrated OpenCage API to retrieve location details based on user input, providing a better user experience during address input.
+
+- **Data Processing**: The backend processes location data efficiently, ensuring relevant and structured responses for frontend integration.
+
+- **Security & Error Handling**: Implemented proper error handling to manage API responses, including rate limits and invalid queries.
+
 ## Technologies Used
 
 - **Frontend**: HTML, CSS, JavaScript (Pure JavaScript for all functionalities)
   
+- **Backend**: Node.js (Express API to handle geolocation requests)
+
 - **3D Rendering**: Three.js (used for the interactive 3D model of AirPods Max)
   
 - **SEO**: Sitemap.xml, robots.txt, and meta tags to improve search engine optimization
@@ -39,13 +49,22 @@ To run this project locally, clone the repository and open the project directory
    git clone https://github.com/jpedromergulhao/airpodsmax.git
    cd airpodsmax
 
-2. Open index.html in your browser to view the website.
+2. Install dependencies (for backend functionality):
+npm install
+
+3. Start the development server:
+npm run dev
+
+4. Open index.html in your browser to view the website.
 
 ## Deployment
 
 The website is deployed on Vercel.
 
 ## Files Overview
+
+### Backend (/api/geolocation.js)
+Handles API requests to fetch geolocation data from OpenCage. It validates input, structures responses, and prevents unnecessary API calls.
 
 ### sitemap.xml
 The `sitemap.xml` file contains a map of all important pages on the site, allowing search engines to crawl and index the website more effectively.
