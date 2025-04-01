@@ -1,18 +1,22 @@
 export const fetchAddress = async (zipCodeValue) => {
-    //API for generate the location usind the zip code
-    const API_KEY = window.NEXT_PUBLIC_OPEN_CAGE_API_KEY;
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${zipCodeValue}&key=${API_KEY}&language=en&limit=1`;
+    // Base URL based on environment (development or production)
+    const isDevelopment = window.location.hostname === 'localhost';
+    const baseUrl = isDevelopment
+        ? 'http://localhost:3000'  // Local URL for development
+        : 'https://airpodsmax-five.vercel.app';  // Vercel production URL
+
+    const url = `${baseUrl}/api/geocode?zipCode=${zipCodeValue}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
-        if (data.results.length > 0) {
-            const address = data.results[0].components;
+        if (response.ok) {
+            const address = data; 
             updateLocation(address);
             return true;
         } else {
-            console.error("Address not found in the API data base");
+            console.error("Error:", data.error || "Address not found in the database");
             return false;
         }
     } catch (error) {

@@ -861,7 +861,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //     if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
 
   //     const data = await response.json();
-  //     console.log("Dados recebidos:", data);
+  //     console.log("Data received: ", data);
   //     const brand = data.scheme;
 
   //     const logos = {
@@ -882,9 +882,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //   } catch (error) {
   //     if (error.name === 'AbortError') {
-  //       console.warn("Requisição cancelada.");
+  //       console.warn("Request canceled.");
   //     } else {
-  //       console.error("Erro na requisição:", error);
+  //       console.error("Request error: ", error);
   //     }
   //   }
   // }
