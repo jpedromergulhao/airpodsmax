@@ -1,16 +1,14 @@
 {
   "name": "my-project",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "vercel dev"
+    "dev": "next dev"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "cors": "^2.8.5"
-  },
-  "devDependencies": {}
+  }
 }
