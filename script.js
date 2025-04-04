@@ -21,20 +21,47 @@ reloadOnResize();
 //Hamburger menu
 const menuIcon = document.getElementsByTagName("svg")[1];
 const menu = document.getElementsByClassName("menu")[0];
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle("bx-x");
 
-    if (menu.style.display === 'flex') {
+const isMobile = window.matchMedia("(max-width: 930px)").matches;
+
+// Menu toggle
+menuIcon.onclick = (e) => {
+    e.stopPropagation(); 
+
+    const isOpen = menu.classList.contains("open");
+
+    if (isOpen) {
         menu.classList.remove("open");
+        menuIcon.classList.remove("bx-x");
         setTimeout(() => {
             menu.style.display = 'none';
-        }, 600);
+        }, 600); 
     } else {
         menu.style.display = 'flex';
         setTimeout(() => {
             menu.classList.add("open");
-        }, 10);
+        }, 10); 
+        menuIcon.classList.add("bx-x");
     }
+};
+
+// Close when clock outside menu
+if (isMobile) {
+    document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target) && !menuIcon.contains(e.target)) {
+            if (menu.classList.contains("open")) {
+                menu.classList.remove("open");
+                menuIcon.classList.remove("bx-x");
+                setTimeout(() => {
+                    menu.style.display = 'none';
+                }, 600);
+            }
+        }
+    });
+
+    menu.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
 }
 
 //Buy section
