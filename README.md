@@ -2,7 +2,7 @@
 
 This is a responsive e-commerce website showcasing and selling AirPods Max, featuring a 3D model viewer and an optimized user experience across different devices. The project was created to demonstrate my front-end development skills and knowledge.
 
-![Home Screen](./Screenshot.png);
+![Home Screen](./img/Screenshot.png);
 
 ## Features
 
