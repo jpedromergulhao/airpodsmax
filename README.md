@@ -1,8 +1,7 @@
 
 # AirPodsMax Website
 
-This is a responsive e-commerce website showcasing and selling AirPods Max, featuring a 3D model viewer and an optimized user experience across devices.  
-The project was created as part of my academic coursework to demonstrate **front-end development**, **API integration**, and **backend communication via serverless functions**.
+This is a responsive e-commerce website showcasing and selling AirPods Max, featuring a 3D model viewer and an optimized user experience across devices. The project was created as part of my academic coursework to demonstrate **front-end development**, **API integration**, and **backend communication via serverless functions**.
 
 ![Home Screen](./img/Screenshot.png)
 
@@ -63,6 +62,8 @@ You can run both the frontend and the backend functions locally.
    - Backend endpoints:
       - http://localhost:3000/api/geocode?zipCode=12345
       - http://localhost:3000/api/cardLookup?cardNumber=4111111111111111
+
+You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.
 
 ---
 

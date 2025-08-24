@@ -1,4 +1,5 @@
 import { fetchAddress, getLocation } from "./locationAPI.js";
+import { fetchCard } from "./cardLogoApi.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -822,9 +823,9 @@ document.addEventListener('DOMContentLoaded', () => {
     actionArea.appendChild(paymentDiv);
   }
 
-  function handleCardInput(event) {
+  async function handleCardInput(event) {
     formatCardNumber(event);
-    // updateCardLogo(event);
+    await updateCardLogo(event);
   }
 
   // Format the card number with spaces every 4 digits
@@ -835,68 +836,19 @@ document.addEventListener('DOMContentLoaded', () => {
     event.target.value = value;
   }
 
-  // let fetchController = null; // To control requests in progress
+  // Function to return the card logo based on the card input number
+  async function updateCardLogo(event) {
+    const cardNumber = event.target.value.replace(/\s/g, '').slice(0, 6);
+    if (!cardNumber) return;
 
-  // async function updateCardLogo(event) {
-  //   const cardNumber = event.target.value.replace(/\s/g, '').slice(0, 6);
-  //   if (!cardNumber) return;
+    const success = await fetchCard(cardNumber);
+    if (!success) return;
 
-  //   if (fetchController) {
-  //     fetchController.abort();
-  //     fetchController = null;
-  //   }
+    const logoImg = localStorage.getItem("logo");
+    console.log("Logo from localStorage: ", logoImg);
 
-  //   fetchController = new AbortController();
-  //   const signal = fetchController.signal;
-
-  //   // Backend URL
-  //   const isDevelopment = window.location.hostname === 'localhost';
-  //   const baseUrl = isDevelopment 
-  //       ? 'http://localhost:3000'  // Local
-  //       : 'https://airpodsmax-five.vercel.app';  // Production
-
-  //   try {
-  //     const response = await fetch(`${baseUrl}/api/cardLookup?cardNumber=${cardNumber}`, {
-  //       method: 'GET',
-  //       signal,
-  //     });
-
-  //     if (response.status === 429) {
-  //       // Log a generic message and don't break the flow
-  //       console.log('The API rate limit has been exceeded. Please try again later.');
-  //       return;
-  //     }
-
-  //     if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
-
-  //     const data = await response.json();
-  //     console.log("Data received: ", data);
-  //     const brand = data.scheme;
-
-  //     const logos = {
-  //       visa: 'Visa-logo.png',
-  //       mastercard: 'Mastercard-logo.png',
-  //       amex: 'American_Express-logo.png',
-  //       discover: 'Discover-logo.png',
-  //       jcb: 'JCB-logo.png',
-  //       diners: 'Diners_Club-logo.png',
-  //       unionpay: 'UnionPay-logo.png',
-  //       elo: 'Elo-logo.png',
-  //       rupay: 'Rupay-logo.png',
-  //       hipercard: 'Hipercard-logo.png'
-  //     };
-
-  //     const logo = logos[brand] || 'credit_card_logos.png';
-  //     document.querySelector('#card').style.backgroundImage = `url(./assets/${logo})`;
-
-  //   } catch (error) {
-  //     if (error.name === 'AbortError') {
-  //       console.warn("Request canceled.");
-  //     } else {
-  //       console.error("Request error: ", error);
-  //     }
-  //   }
-  // }
+    document.querySelector('#card').style.backgroundImage = `url(./assets/${logoImg})`;
+  }
 
   function handleExpInput(event) {
     const input = event.target;
