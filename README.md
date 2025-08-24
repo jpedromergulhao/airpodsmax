@@ -54,10 +54,12 @@ You can run both the frontend and the backend functions locally.
 1. Clone the repository:
    - `git clone https://github.com/jpedromergulhao/airpodsmax.git`
    - `cd airpodsmax`
-2. Run the project locally: To run the project locally, Vercel CLI requires authentication. This is only for local simulation and does not deploy the project or link it to your Vercel account.
+2. Create a `.env` file in the root and place it:
+   - OPEN_CAGE_API_KEY=Your_Api_Key;
+3. Run the project locally: To run the project locally, Vercel CLI requires authentication. This is only for local simulation and does not deploy the project or link it to your Vercel account.
    - `vercel login` (If you are not authenticated to your vercel account)
    - `vercel dev`
-3. The app will be available at:
+4. The app will be available at:
    - Frontend: http://localhost:3000
    - Backend endpoints:
       - http://localhost:3000/api/geocode?zipCode=12345
