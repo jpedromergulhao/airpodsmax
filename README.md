@@ -8,7 +8,7 @@
 
 This is a responsive e-commerce website showcasing and selling **AirPods Max**, featuring a **3D product viewer**, **dynamic checkout flow**, and **API integrations** via serverless functions. The project was created as part of my academic coursework to demonstrate **front-end development**, **API integration**, and **backend communication using serverless architecture**.  
 
-![Home Screen](./img/Screenshot.png)  
+![Project demo](./img/demoGif.gif)  
 
 ---
 
@@ -109,7 +109,7 @@ https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
   Allow: /
   Sitemap: https://airpodsmax-five.vercel.app/sitemap.xml
   ```  
-  
+
 - **Tooltip**: Guides users for CVV input.  
 - **3D Model (Three.js)**: Enhances interactivity and engagement.  
 
