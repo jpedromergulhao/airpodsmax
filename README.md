@@ -1,98 +1,129 @@
-
 # AirPodsMax Website
 
-This is a responsive e-commerce website showcasing and selling AirPods Max, featuring a 3D model viewer and an optimized user experience across devices. The project was created as part of my academic coursework to demonstrate **front-end development**, **API integration**, and **backend communication via serverless functions**.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)  
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)  
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)  
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)  
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)  
 
-![Home Screen](./img/Screenshot.png)
-
----
-
-## Features
-
-- **Responsive Design**: Fully responsive pages, including a checkout flow optimized for mobile and desktop.  
-- **3D Model Viewer**: Interactive 3D model of the AirPods Max built with Three.js, allowing users to explore the product dynamically.  
-- **Checkout Process**: Shopping cart and checkout steps with dynamic validation and API communication.  
-- **Tooltips**: Contextual tooltips for better user guidance (e.g., CVV input field).  
-- **SEO Optimization**: Includes `sitemap.xml`, `robots.txt`, and meta descriptions for search engines.  
-- **Accessibility**: Designed for easy navigation and usability across devices.   
+**Live Demo**: [https://airpodsmax-five.vercel.app](https://airpodsmax-five.vercel.app)  
 
 ---
 
-## Backend Features
+This is a responsive e-commerce website showcasing and selling **AirPods Max**, featuring a **3D product viewer**, **dynamic checkout flow**, and **API integrations** via serverless functions. The project was created as part of my academic coursework to demonstrate **front-end development**, **API integration**, and **backend communication using serverless architecture**.  
 
-This project uses **Vercel Serverless Functions** as the backend, located in the `/api` folder.
-
-- **Geolocation API (OpenCage)**: Retrieves location details based on the ZIP code entered by the user.  
-- **Credit Card API (Binlist.net)**: Detects credit card brand during input and returns the corresponding card flag dynamically.  
-- **Security & Error Handling**: Includes proper error handling for API responses, invalid queries, and rate limits.  
+![Home Screen](./img/Screenshot.png)  
 
 ---
 
-## Technologies Used
+## ✅ Features  
+
+- **Responsive Design**: Fully responsive layout with a smooth checkout flow.  
+- **3D Model Viewer**: Built with **Three.js**, allowing users to interact with the AirPods Max in 3D as they scroll.  
+- **Checkout Process**: Includes shopping cart, dynamic validation, and credit card detection.  
+- **Tooltips**: Contextual tooltips for better user guidance (e.g., CVV input).  
+- **SEO Optimization**: Includes `sitemap.xml`, `robots.txt`, and meta descriptions.  
+- **Accessibility**: Designed for usability across devices and screen readers.  
+
+---
+
+## ✅ Backend Features  
+
+This project uses **Vercel Serverless Functions** (Node.js runtime) — implemented in the `/api` folder (no dedicated server required).  
+
+- **Geolocation API (OpenCage)**: Retrieves location details from ZIP code.  
+- **Credit Card API (Binlist.net)**: Detects card brand dynamically and displays the correct logo.  
+- **Error Handling**: Includes proper handling for API failures and rate limits.  
+
+---
+
+## ✅ Technologies Used  
 
 - **Frontend**: HTML, CSS, Vanilla JavaScript  
-- **Backend**: Vercel Serverless Functions (Node.js runtime) - `/api` folder. No need for dedicated server
-- **3D Rendering**: Three.js (via minified file)
-- **Animations**: AOS.js (via CDN)
-- **SEO**: Sitemap, robots.txt, and meta descriptions  
-- **Deployment**: Vercel  
+- **Backend**: Vercel Serverless Functions (Node.js runtime) — `/api` folder  
+- **3D Rendering**: [Three.js](https://threejs.org/)  
+- **Animations**: [AOS.js](https://michalsnik.github.io/aos/)  
+- **APIs**:  
+  - [OpenCage Geocoding API](https://opencagedata.com/api)  
+  - [Binlist Card Lookup](https://lookup.binlist.net/)  
+- **Deployment**: [Vercel](https://vercel.com/)  
 - **Version Control**: Git + GitHub  
 
 ---
 
-## Running Locally
+## ✅ Running Locally  
 
-You can run both the frontend and the backend functions locally.
+You can run both the frontend and the backend functions locally.  
 
-### Requirements
-- [Node.js](https://nodejs.org/) installed  
-- [Vercel CLI](https://vercel.com/download) installed globally (`npm i -g vercel`)  
-
----
-
-### Steps
-1. Clone the repository:
-   - `git clone https://github.com/jpedromergulhao/airpodsmax.git`
-2. Create a `.env` file in the root and place it:
-   - `OPEN_CAGE_API_KEY=Your_Api_Key;`
-3. Run the project locally: 
-   - `vercel login` (If you are not authenticated to your vercel account)
-   - `vercel dev`
-4. The app will be available at:
-   - Frontend: http://localhost:3000
-   - Backend endpoints:
-      - http://localhost:3000/api/geocode?zipCode=12345
-      - http://localhost:3000/api/cardLookup?cardNumber=4111111111111111
-
-You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.
-
-**Note**: Running `vercel login` is only for local simulation and will NOT link the project to your Vercel account or deploy it.
+### Requirements  
+- [Node.js](https://nodejs.org/)  
+- [Vercel CLI](https://vercel.com/download) (`npm i -g vercel`)  
 
 ---
 
-## Deployment
-The website and backend functions are deployed on Vercel.
-- Frontend and API routes share the same domain.
-- Example API call in production: https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
+### Steps  
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/jpedromergulhao/airpodsmax.git
+   cd airpodsmax
+   ```  
+
+2. Create a `.env` file in the root and add:  
+   ```
+   OPEN_CAGE_API_KEY=Your_Api_Key
+   ```  
+
+3. Run locally:  
+   ```bash
+   vercel login    # Only for local simulation (does NOT deploy)
+   vercel dev
+   ```  
+
+4. Access:  
+   - **Frontend**: `http://localhost:3000`  
+   - **API Endpoints**:  
+     - `http://localhost:3000/api/geocode?zipCode=12345`  
+     - `http://localhost:3000/api/cardLookup?cardNumber=4111111111111111`  
+
+You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.  
 
 ---
 
-### Files Overview
-- `/api/geocode.js`: Handles API requests to fetch geolocation data from OpenCage. Validates input, structures responses, and manages errors.
-- `/api/cardLookup.js`: Handles API requests to detect credit card brand via Binlist and returns relevant details.
-- `sitemap.xml`: Provides search engines with a structured map of the site for better crawling.
-- `robots.txt`: Controls how search engines crawl and index the site. Example:
-- Tooltip: Guides users when filling in sensitive inputs like the CVV field.
-- 3D Model (Three.js): Interactive 3D visualization of AirPods Max, improving user experience.
+## ✅ Deployment  
+
+The website and API functions are deployed on **Vercel**.  
+Frontend and API share the same domain.  
+
+Example production API call:  
+```
+https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
+```  
 
 ---
 
-### SEO & Crawling Optimization
-- Sitemap: Informs search engines of the site structure.
-- Robots.txt: Restricts or allows crawling of specific pages.
+## ✅ Files Overview  
+
+- `/api/geocode.js`: Fetches location data from OpenCage.  
+- `/api/cardLookup.js`: Detects credit card brand using Binlist.  
+- `sitemap.xml`: Helps search engines crawl the site.  
+- `robots.txt`: Controls indexing. Example:  
+  ```
+  User-agent: *
+  Disallow: /checkout.html
+  Allow: /
+  Sitemap: https://airpodsmax-five.vercel.app/sitemap.xml
+  ```  
+- **Tooltip**: Guides users for CVV input.  
+- **3D Model (Three.js)**: Enhances interactivity and engagement.  
 
 ---
 
-## License
-This project is academic and intended solely for demonstrating my development skills.
-It is not open for contributions or forks.
+## ✅ SEO & Crawling Optimization  
+- Sitemap for structured crawling.  
+- Robots.txt to manage access.  
+
+---
+
+## ✅ License  
+This project is **academic** and intended solely for demonstrating development skills.  
+Not open for contributions or forks.  
