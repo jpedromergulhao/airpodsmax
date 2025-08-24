@@ -23,7 +23,7 @@ This is a responsive e-commerce website showcasing and selling AirPods Max, feat
 This project uses **Vercel Serverless Functions** as the backend, located in the `/api` folder.
 
 - **Geolocation API (OpenCage)**: Retrieves location details based on the ZIP code entered by the user.  
-- **Credit Card API (Planned)**: Detects credit card brand during input and returns the corresponding card flag dynamically.  
+- **Credit Card API (Binlist.net)**: Detects credit card brand during input and returns the corresponding card flag dynamically.  
 - **Security & Error Handling**: Includes proper error handling for API responses, invalid queries, and rate limits.  
 
 ---
