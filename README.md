@@ -31,7 +31,7 @@ This project uses **Vercel Serverless Functions** as the backend, located in the
 ## Technologies Used
 
 - **Frontend**: HTML, CSS, Vanilla JavaScript  
-- **Backend**: Vercel Serverless Functions (`/api` folder)  
+- **Backend**: Vercel Serverless Functions (Node.js runtime) - `/api` folder. No need for dedicated server
 - **3D Rendering**: Three.js (via minified file)
 - **Animations**: AOS.js (via CDN)
 - **SEO**: Sitemap, robots.txt, and meta descriptions  
@@ -55,7 +55,7 @@ You can run both the frontend and the backend functions locally.
    - `git clone https://github.com/jpedromergulhao/airpodsmax.git`
 2. Create a `.env` file in the root and place it:
    - `OPEN_CAGE_API_KEY=Your_Api_Key;`
-3. Run the project locally: To run the project locally, Vercel CLI requires authentication. This is only for local simulation and does not deploy the project or link it to your Vercel account.
+3. Run the project locally: 
    - `vercel login` (If you are not authenticated to your vercel account)
    - `vercel dev`
 4. The app will be available at:
@@ -65,6 +65,8 @@ You can run both the frontend and the backend functions locally.
       - http://localhost:3000/api/cardLookup?cardNumber=4111111111111111
 
 You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.
+
+Note: Running `vercel login` is only for local simulation and will NOT link the project to your Vercel account or deploy it.
 
 ---
 
@@ -77,7 +79,7 @@ The website and backend functions are deployed on Vercel.
 
 ### Files Overview
 - `/api/geocode.js`: Handles API requests to fetch geolocation data from OpenCage. Validates input, structures responses, and manages errors.
-- `/api/cardLookup.js` (planned): Will handle credit card brand detection and return the card flag dynamically.
+- `/api/cardLookup.js`: Handles API requests to detect credit card brand via Binlist and returns relevant details.
 - `sitemap.xml`: Provides search engines with a structured map of the site for better crawling.
 - `robots.txt`: Controls how search engines crawl and index the site. Example:
 - Tooltip: Guides users when filling in sensitive inputs like the CVV field.
