@@ -66,7 +66,7 @@ You can run both the frontend and the backend functions locally.
 
 You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.
 
-Note: Running `vercel login` is only for local simulation and will NOT link the project to your Vercel account or deploy it.
+**Note**: Running `vercel login` is only for local simulation and will NOT link the project to your Vercel account or deploy it.
 
 ---
 
