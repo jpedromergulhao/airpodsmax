@@ -1,5 +1,4 @@
 User-agent: *
 Disallow: /checkout.html
 Allow: /
-
 Sitemap: https://airpodsmax-five.vercel.app/sitemap.xml
