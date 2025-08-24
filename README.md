@@ -102,12 +102,14 @@ https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
 - `/api/cardLookup.js`: Detects credit card brand using Binlist.  
 - `sitemap.xml`: Helps search engines crawl the site.  
 - `robots.txt`: Controls indexing. Example:  
+
   ```
   User-agent: *
   Disallow: /checkout.html
   Allow: /
   Sitemap: https://airpodsmax-five.vercel.app/sitemap.xml
   ```  
+  
 - **Tooltip**: Guides users for CVV input.  
 - **3D Model (Three.js)**: Enhances interactivity and engagement.  
 
