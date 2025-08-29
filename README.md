@@ -1,6 +1,6 @@
 # AirPodsMax Website
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)  
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Cypress](https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)  
 
 **Live Demo**: [https://airpodsmax-five.vercel.app](https://airpodsmax-five.vercel.app)  
 
@@ -39,6 +39,7 @@ This project uses **Vercel Serverless Functions** (Node.js runtime) — implemen
 - **Backend**: Vercel Serverless Functions (Node.js runtime) — `/api` folder  
 - **3D Rendering**: [Three.js](https://threejs.org/)  
 - **Animations**: [AOS.js](https://michalsnik.github.io/aos/)  
+- **Test**: [Cypress](https://www.cypress.io/)
 - **APIs**:  
   - [OpenCage Geocoding API](https://opencagedata.com/api)  
   - [Binlist Card Lookup](https://lookup.binlist.net/)  
@@ -101,6 +102,7 @@ https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
 - `/api/geocode.js`: Fetches location data from OpenCage.  
 - `/api/cardLookup.js`: Detects credit card brand using Binlist.  
 - `sitemap.xml`: Helps search engines crawl the site.  
+- `/cypress`: Performs end-to-end (E2E) testing.
 - `robots.txt`: Controls indexing. Example:  
 
   ```

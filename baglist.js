@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+import createAlert from "./alert.js";
 
+document.addEventListener('DOMContentLoaded', () => {
     const bagElement = document.querySelector('.bag');
     const closeBtn = document.querySelector('.close');
     const baglist = document.querySelector('.bagList');
@@ -19,13 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
 
     // close and open the bag
-    bagElement.addEventListener("click", () => {
+    bagElement.addEventListener("click", (event) => {
+        event.stopPropagation();
         baglist.style.transform = "translateX(0)";
     });
 
     closeBtn.addEventListener("click", () => {
         baglist.style.transform = "translateX(100%)";
     });
+
+    baglist.addEventListener("click", (event) => {
+        event.stopPropagation();
+    })
+
+    document.addEventListener("click", (event) => {
+        if (baglist.style.transform === "translateX(0px)") {
+            baglist.style.transform = "translateX(100%)";
+        }
+    })
 
     returnBtn.addEventListener("click", () => {
         baglist.style.transform = "translateX(100%)";
@@ -98,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         if (bagItems.length === 0) {
-            window.alert('The bag is empty, please add a product.');
+            createAlert('The bag is empty, please add a product');
             return;
         }
 

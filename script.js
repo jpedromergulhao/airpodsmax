@@ -1,3 +1,5 @@
+import createAlert from "./alert.js";
+
 //loading
 const model3d = document.querySelector(".container3d");
 window.addEventListener("load", function () {
@@ -26,7 +28,7 @@ const isMobile = window.matchMedia("(max-width: 930px)").matches;
 
 // Menu toggle
 menuIcon.onclick = (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
 
     const isOpen = menu.classList.contains("open");
 
@@ -35,12 +37,12 @@ menuIcon.onclick = (e) => {
         menuIcon.classList.remove("bx-x");
         setTimeout(() => {
             menu.style.display = 'none';
-        }, 600); 
+        }, 600);
     } else {
         menu.style.display = 'flex';
         setTimeout(() => {
             menu.classList.add("open");
-        }, 10); 
+        }, 10);
         menuIcon.classList.add("bx-x");
     }
 };
@@ -83,7 +85,7 @@ document.querySelectorAll('.btn').forEach(button => {
 
 document.querySelector('.addBtn').addEventListener('click', function () {
     if (!selectedColor) {
-        alert("Please select a color before adding to bag.");
+        createAlert("Please select a color before adding to bag");
         return;
     }
     const event = new CustomEvent('addToBag', {

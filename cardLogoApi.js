@@ -19,19 +19,18 @@ export const fetchCard = async (cardNumberValue) => {
                 method: 'GET'
             });
 
-            if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+            if (!response.ok){
+                const errorData = await response.json();
 
-            const data = await response.json();
-
-            if (response.status === 429) {
-                console.warn(data.message);
-                return;
+                if (response.status === 429){
+                    return errorData.error || "The limit for this API has been exceeded";
+                } else {
+                    return errorData.error || "An API error occurred. Please try again";
+                }
             }
 
-            console.log("Data received: ", data);
+            const data = await response.json();
             const brand = data.scheme;
-            console.log("Brand name: ", brand);
-
             const logos = {
                 visa: 'Visa-logo.png',
                 mastercard: 'Mastercard-logo.png',
@@ -53,6 +52,7 @@ export const fetchCard = async (cardNumberValue) => {
                 console.warn("Request canceled.");
             } else {
                 console.error("Request error: ", error);
+                return "Network error. Please check your connection and try again";
             }
 
             return false;

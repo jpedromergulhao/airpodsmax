@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     if (response.status === 429) {
       // Return a custom message for rate limit exceeded, without throwing an error
-      return res.status(429).json({ message: 'The limit for this API has been exceeded. Please try again later for a better experience, or you can ignore it.' });
+      return res.status(429).json({ error: 'The limit for this API has been exceeded. Please try again later for a better experience, or you can ignore it.' });
     }
 
     if (!response.ok) {

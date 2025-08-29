@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     const { zipCode } = req.query;
   
     if (!zipCode) {
-      return res.status(400).json({ error: 'Zip code is required' });
+      return res.status(400).json({ error: 'A valid zip code is required' });
     }
   
     const API_KEY = process.env.OPEN_CAGE_API_KEY;
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       if (data.results.length > 0) {
         res.status(200).json(data.results[0].components);
       } else {
-        res.status(404).json({ error: 'Address not found' });
+        res.status(404).json({ error: 'Address not found in the database' });
       }
     } catch (error) {
       console.error('Error fetching address:', error);

@@ -1,5 +1,6 @@
 import { fetchAddress, getLocation } from "./locationAPI.js";
 import { fetchCard } from "./cardLogoApi.js";
+import createAlert from "./alert.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const success = await fetchAddress(zipCodeValue);
 
       if (!success) {
-        showZipCodeError(zipCode);
+        createAlert(success); //show the error message
         return;
       }
 
@@ -842,11 +843,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!cardNumber) return;
 
     const success = await fetchCard(cardNumber);
-    if (!success) return;
+    if (!success) {
+      createAlert(success); //Show the error message 
+      return;
+    }
 
     const logoImg = localStorage.getItem("logo");
-    console.log("Logo from localStorage: ", logoImg);
-
     document.querySelector('#card').style.backgroundImage = `url(./assets/${logoImg})`;
   }
 

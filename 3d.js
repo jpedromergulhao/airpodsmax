@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "header", position: { x: 3.6, y: -0.4, z: -30 }, rotation: { x: 0, y: 3.8, z: 0 } },
         { id: "design", position: { x: -2.5, y: 0, z: -30 }, rotation: { x: 0, y: 3.2, z: 0 } },
         { id: "sound", position: { x: 3, y: 0, z: -40 }, rotation: { x: 0, y: 1.5, z: 0 } },
-        { id: "comfort", position: { x: 6.5, y: 0.9, z: -55 }, rotation: { x: -0.02, y: 3.05, z: 0.2 } },
+        { id: "comfort", position: { x: 6, y: 0.9, z: -55 }, rotation: { x: -0.02, y: 3.05, z: 0.2 } },
         { id: "battery", position: { x: -3, y: 0, z: -30 }, rotation: { x: 0, y: 2.5, z: 0 } },
     ];
 
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
 
                 case "comfort":
-                    obj.position = width >= 1150 ? { x: 6.5, y: 0.9, z: -55 } :
+                    obj.position = width >= 1150 ? { x: 6, y: 0.9, z: -55 } :
                         width >= 950 ? { x: 7.7, y: 1.6, z: -75 } :
                             width >= 920 ? { x: 6.9, y: 1.6, z: -75 } :
                                 width >= 768 ? { x: 6.8, y: 1.6, z: -85 } :
