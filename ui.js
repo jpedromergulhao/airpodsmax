@@ -840,16 +840,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to return the card logo based on the card input number
   async function updateCardLogo(event) {
     const cardNumber = event.target.value.replace(/\s/g, '').slice(0, 6);
-    if (!cardNumber) return;
 
-    const success = await fetchCard(cardNumber);
-    if (!success) {
-      createAlert(success); //Show the error message 
-      return;
+    if (cardNumber.length < 6) {
+      document.querySelector('#card').style.backgroundImage = 'url(./assets/credit_card_logos.png)';
+      return
     }
 
-    const logoImg = localStorage.getItem("logo");
-    document.querySelector('#card').style.backgroundImage = `url(./assets/${logoImg})`;
+    const result = await fetchCard(cardNumber);
+
+    if (result.success) {
+      document.querySelector('#card').style.backgroundImage = `url(./assets/${result.data.logo})`;
+    } else {
+      createAlert(result.error);
+    }
   }
 
   function handleExpInput(event) {
@@ -920,9 +923,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handlePaymentClick(event, location, addressData) {
-
     event.preventDefault();
 
+    const cardInput = document.getElementById('card');
     const requiredFields = [
       'card', 'expiration', 'cvv', 'country', 'firstName', 'lastName', 'street', 'zipCode', 'city', 'state'
     ];
@@ -941,6 +944,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!allFilled) {
       return;
+    }
+
+    if (cardInput.value.length < 16) {
+      cardInput.classList.add('input-error');
+      return
     }
 
     const billingData = {

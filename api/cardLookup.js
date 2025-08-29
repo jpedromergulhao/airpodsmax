@@ -9,8 +9,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log(`Fetching data for card: ${cardNumber}`);
-
     const response = await fetch(`https://lookup.binlist.net/${cardNumber}`, {
       method: 'GET',
       headers: { 'Accept': 'application/json' },
@@ -18,7 +16,7 @@ export default async function handler(req, res) {
 
     if (response.status === 429) {
       // Return a custom message for rate limit exceeded, without throwing an error
-      return res.status(429).json({ error: 'The limit for this API has been exceeded. Please try again later for a better experience, or you can ignore it.' });
+      return res.status(429).json({ error: 'The API limit has been exceeded. Please try again later, or you can ignore it' });
     }
 
     if (!response.ok) {
@@ -27,8 +25,6 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    console.log('Response from Binlist:', data);
-
     return res.status(200).json(data);
   } catch (error) {
     console.error('Error fetching card data:', error);

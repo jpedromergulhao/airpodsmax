@@ -37,7 +37,7 @@
 
 #card {
     background-image: url(../../assets/credit_card_logos.png);
-    background-size: 120px;
+    background-size: 100px;
     background-repeat: no-repeat;
     background-position: center;
     background-position-x: calc(100% - 15px);
