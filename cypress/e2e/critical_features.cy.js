@@ -51,6 +51,9 @@ describe('Checkout Flow', () => {
     cy.get('#city').should('have.value', 'Recife');
     cy.get('#state').should('have.value', 'Pernambuco');
     cy.get('#email').type('john@gmail.com');
+    cy.get('.iti__country-container').click();
+    cy.get('.iti__search-input').type('United States');
+    cy.get('#iti-0__item-us').click();
     cy.get("#phone").type('9999999999');
 
     // 11 Continue to payment method section
@@ -65,7 +68,7 @@ describe('Checkout Flow', () => {
     cy.get('#expiration').type('1232');
     cy.get('#cvv').type('121');
     cy.get('#shipAddress').click();
-    cy.get('.zipCodeShip').should('have.value', '51020-250');
+    cy.get('#zipCode').should('have.value', '51020-250');
     
     // 13 Continue to review
     cy.get('.paymentBtn').click();
@@ -76,7 +79,7 @@ describe('Checkout Flow', () => {
     cy.get('.bilInfo').should('include.text', '51020-250');
     cy.get('.payBtn').click();
     cy.get('.popup').should('include.text', '549');
-    cy.get('close').click();
+    cy.get('.close').click();
 
     // 15 Back to main page;
     cy.contains('Pro‑level Active Noise Cancellation with Transparency Mode');
