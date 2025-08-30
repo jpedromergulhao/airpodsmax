@@ -485,6 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
           console.error('Error in load intlTelInput: ', error);
+          createAlert("Error in load the phone input options, please refresh the page");
         }
       }
 
