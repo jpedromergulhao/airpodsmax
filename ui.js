@@ -456,27 +456,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Phone validation and country phone code using intl-tel-input library
       if (data.id === 'phone') {
+        const location = getLocation();
+        const geoIP = location.country_code || "us";
+        const geoIPLookup = geoIP.toUpperCase();
+
         try {
           setTimeout(() => { // Timeout to prevent the library from being applied before the input is created in the DOM
             itiLibrary = window.intlTelInput(document.getElementById('phone'), {
-              initialCountry: 'auto',
-              geoIpLookup: async (callback) => {
-                try {
-                  navigator.geolocation.getCurrentPosition(async (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
-
-                    const response = await fetch(`/api/countryCode?lat=${lat}&lng=${lng}`);
-                    const geoData = await response.json();
-                    const countryCode = geoData.country_code.toUpperCase();
-                    callback(countryCode);
-                  }, () => {
-                    callback("US"); 
-                  });
-                } catch {
-                  callback("US");
-                }
-              },
+              initialCountry: geoIP,
+              geoIpLookup: geoIPLookup,
               utilsScript: "./libraries/intlTelInputWithUtils.min.js"
             });
           }, 100);
