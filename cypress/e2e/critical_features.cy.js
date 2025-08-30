@@ -62,5 +62,23 @@ describe('Checkout Flow', () => {
     cy.get('#card').type('4111111111111111'); // Visa
     cy.wait('@cardLogo');
     cy.get('#card').should('have.css', 'background-image').and('match', /Visa-logo\.png/);
+    cy.get('#expiration').type('1232');
+    cy.get('#cvv').type('121');
+    cy.get('#shipAddress').click();
+    cy.get('.zipCodeShip').should('have.value', '51020-250');
+    
+    // 13 Continue to review
+    cy.get('.paymentBtn').click();
+
+    // 14 pay
+    cy.get('.reviewProdct').should('include.text', 'AirPod Max');
+    cy.get('.shipInfo').should('include.text', '51020-250');
+    cy.get('.bilInfo').should('include.text', '51020-250');
+    cy.get('.payBtn').click();
+    cy.get('.popup').should('include.text', '549');
+    cy.get('close').click();
+
+    // 15 Back to main page;
+    cy.contains('Pro‑level Active Noise Cancellation with Transparency Mode');
   })
 })
