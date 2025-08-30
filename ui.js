@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // If the shopping bag is empty, return to the home page
   if (bagItems.length === 0) {
-    alert('Your bag is empty, please add a product');
+    createAlert('Your bag is empty, please add a product');
     window.location.href = './index.html';
   }
 
@@ -46,16 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
     zipCode.setCustomValidity("");
     zipCode.reportValidity();
 
-    if (!validateZipCode(zipCodeValue)) {
+    if (zipCodeValue === "") {
       showZipCodeError(zipCode);
       return;
     }
 
     processZipCode(zipCode, zipCodeValue);
-  }
-
-  function validateZipCode(zipCodeValue) {
-    return zipCodeValue !== "";
   }
 
   async function processZipCode(zipCode, zipCodeValue) {
@@ -377,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
       input.placeholder = data.placeholder;
       if (data.required) input.required = true;
       input.value = data.value;
-      if (data.readonly) input.readOnly = true;  // Make it readonly
+      if (data.readonly) input.readOnly = true;
       formInputs.appendChild(input);
     });
 
@@ -466,9 +462,17 @@ document.addEventListener('DOMContentLoaded', () => {
               initialCountry: 'auto',
               geoIpLookup: async (callback) => {
                 try {
-                  const response = await fetch("https://ipapi.co/json/");
-                  const geoData = await response.json();
-                  callback(geoData.country_code);
+                  navigator.geolocation.getCurrentPosition(async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    const response = await fetch(`/api/countryCode?lat=${lat}&lng=${lng}`);
+                    const geoData = await response.json();
+                    const countryCode = geoData.country_code.toUpperCase();
+                    callback(countryCode);
+                  }, () => {
+                    callback("US"); 
+                  });
                 } catch {
                   callback("US");
                 }

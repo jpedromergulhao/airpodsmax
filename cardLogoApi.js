@@ -11,15 +11,8 @@ export const fetchCard = async (cardNumberValue) => {
 
     return new Promise((resolve) => {
         debounceTimeout = setTimeout(async () => {
-            const isDevelopment = window.location.hostname === 'localhost';
-            const baseUrl = isDevelopment
-                ? 'http://localhost:3000'
-                : 'https://airpodsmax-five.vercel.app';
-
-            const url = `${baseUrl}/api/cardLookup?cardNumber=${cardNumberValue}`;
-
             try {
-                const response = await fetch(url);
+                const response = await fetch(`/api/cardLookup?cardNumber=${cardNumberValue}`);
                 const data = await response.json();
 
                 if (!response.ok) {

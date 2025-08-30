@@ -1,30 +1,23 @@
 export const fetchAddress = async (zipCodeValue) => {
-    // Determine the base URL based on the environment
-    const baseUrl = window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://airpodsmax-five.vercel.app';
-
-    const url = `${baseUrl}/api/geocode?zipCode=${zipCodeValue}`;
-
     try {
-        const response = await fetch(url);
-        
+        const response = await fetch(`/api/geocode?zipCode=${zipCodeValue}`);
+
         // Check for network errors and non-200 HTTP status codes
         if (!response.ok) {
             const errorData = await response.json();
-            
+
             // Return a specific error message based on the status code
             if (response.status === 404) {
                 return errorData.error || "Address not found";
             } else if (response.status === 400) {
-                return errorData.error || "Invalid zip code format"; 
+                return errorData.error || "Invalid zip code format";
             } else {
                 return errorData.error || "An API error occurred. Please try again";
             }
         }
-        
+
         const address = await response.json();
-        updateLocation(address); 
+        updateLocation(address);
         return true;
     } catch (error) {
         // Catch network failures

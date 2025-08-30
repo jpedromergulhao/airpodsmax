@@ -27,7 +27,7 @@ This is a responsive e-commerce website showcasing and selling **AirPods Max**, 
 
 This project uses **Vercel Serverless Functions** (Node.js runtime) — implemented in the `/api` folder (no dedicated server required).  
 
-- **Geolocation API (OpenCage)**: Retrieves location details from ZIP code.  
+- **Geolocation API (OpenCage)**: Retrieves location details from ZIP code and longitude/latitude.  
 - **Credit Card API (Binlist.net)**: Detects card brand dynamically and displays the correct logo.  
 - **Error Handling**: Includes proper handling for API failures and rate limits.  
 
@@ -59,10 +59,11 @@ You can run both the frontend and the backend functions locally.
 ---
 
 ### Steps  
-1. Clone the repository:  
+1. Clone the repository and install the dependencies:  
    ```bash
    git clone https://github.com/jpedromergulhao/airpodsmax.git
    cd airpodsmax
+   npm install
    ```  
 
 2. Create a `.env` file in the root and add:  
@@ -80,7 +81,8 @@ You can run both the frontend and the backend functions locally.
    - **Frontend**: `http://localhost:3000`  
    - **API Endpoints**:  
      - `http://localhost:3000/api/geocode?zipCode=12345`  
-     - `http://localhost:3000/api/cardLookup?cardNumber=4111111111111111`  
+     - `http://localhost:3000//api/countryCode?lat=1121221212212&lng=99999999`
+     - `http://localhost:3000/api/cardLookup?cardNumber=411111`  
 
 You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.  
 
@@ -99,8 +101,9 @@ https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
 
 ## ✅ Files Overview  
 
-- `/api/geocode.js`: Fetches location data from OpenCage.  
-- `/api/cardLookup.js`: Detects credit card brand using Binlist.  
+- `/api/geocode.js`: Fetches location data from OpenCage based on the zip code.  
+- `/api/cardLookup.js`: Detects credit card brand using Binlist. 
+- `/api/countryCode/js`: Fetches location data from OpenCage based on the user longitude/latitude. 
 - `sitemap.xml`: Helps search engines crawl the site.  
 - `/cypress`: Performs end-to-end (E2E) testing.
 - `robots.txt`: Controls indexing. Example:  
