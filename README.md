@@ -27,7 +27,7 @@ This is a responsive e-commerce website showcasing and selling **AirPods Max**, 
 
 This project uses **Vercel Serverless Functions** (Node.js runtime) — implemented in the `/api` folder (no dedicated server required).  
 
-- **Geolocation API (OpenCage)**: Retrieves location details from ZIP code and longitude/latitude.  
+- **Geolocation API (OpenCage)**: Retrieves location details from ZIP code.  
 - **Credit Card API (Binlist.net)**: Detects card brand dynamically and displays the correct logo.  
 - **Error Handling**: Includes proper handling for API failures and rate limits.  
 
@@ -37,8 +37,10 @@ This project uses **Vercel Serverless Functions** (Node.js runtime) — implemen
 
 - **Frontend**: HTML, CSS, Vanilla JavaScript  
 - **Backend**: Vercel Serverless Functions (Node.js runtime) — `/api` folder  
-- **3D Rendering**: [Three.js](https://threejs.org/)  
-- **Animations**: [AOS.js](https://michalsnik.github.io/aos/)  
+- **Libraries**:
+   - [Three.js](https://threejs.org/): 3D Rendering
+   - [AOS.js](https://michalsnik.github.io/aos/): Scroll animations
+   - [intl-tel-input](https://intl-tel-input.com/): International telephone numbers
 - **Test**: [Cypress](https://www.cypress.io/)
 - **APIs**:  
   - [OpenCage Geocoding API](https://opencagedata.com/api)  
@@ -81,7 +83,6 @@ You can run both the frontend and the backend functions locally.
    - **Frontend**: `http://localhost:3000`  
    - **API Endpoints**:  
      - `http://localhost:3000/api/geocode?zipCode=12345`  
-     - `http://localhost:3000//api/countryCode?lat=1121221212212&lng=99999999`
      - `http://localhost:3000/api/cardLookup?cardNumber=411111`  
 
 You can use `4111111111111111` as a test card number. This is a fictitious Visa card provided for testing purposes only.  
@@ -101,22 +102,26 @@ https://airpodsmax-five.vercel.app/api/geocode?zipCode=12345
 
 ## ✅ Files Overview  
 
-- `/api/geocode.js`: Fetches location data from OpenCage based on the zip code.  
-- `/api/cardLookup.js`: Detects credit card brand using Binlist. 
-- `/api/countryCode/js`: Fetches location data from OpenCage based on the user longitude/latitude. 
-- `sitemap.xml`: Helps search engines crawl the site.  
-- `/cypress`: Performs end-to-end (E2E) testing.
-- `robots.txt`: Controls indexing. Example:  
+## ✅ Files Overview
 
-  ```
-  User-agent: *
-  Disallow: /checkout.html
-  Allow: /
-  Sitemap: https://airpodsmax-five.vercel.app/sitemap.xml
-  ```  
+- `/api/geocode.js`: Fetches location data from OpenCage based on the zip code.
+- `/api/cardLookup.js`: Detects credit card brand using Binlist.
+- `/libraries/three`: Three.js library files.
+- `/libraries/gsap.min.js`: Minified GSAP library for smooth 3D model animation.
+- `/libraries/intlTelInputWithUtils.min.js`: Minified intl-tel-input library.
+- `/cypress/e2e`: Contains end-to-end (E2E) tests.
+- `sitemap.xml`: Helps search engines crawl the site.
+- `robots.txt`: Controls indexing. Example:
 
-- **Tooltip**: Guides users for CVV input.  
-- **3D Model (Three.js)**: Enhances interactivity and engagement.  
+  ```
+  User-agent: *
+  Disallow: /checkout.html
+  Allow: /
+  Sitemap: [https://airpodsmax-five.vercel.app/sitemap.xml](https://airpodsmax-five.vercel.app/sitemap.xml)
+  ```
+
+- **Tooltip**: Provides visual guidance for CVV input.
+- **3D Model (Three.js)**: A 3D model that enhances interactivity and user engagement.
 
 ---
 
